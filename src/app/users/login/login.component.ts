@@ -18,7 +18,6 @@ export class LoginComponent {
   error: any;
   loginUser() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
       this.authService.login(this.loginForm.value).subscribe(
         result => {
           if (result.key) {

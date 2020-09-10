@@ -17,11 +17,13 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
-  signUp(username: string, email: string, password: string) { }
+  register(data): Observable<any> {
+    return this.http.post(`${baseUrl}user/registration`, data);
+  }
 
   login(data): Observable<any> {
-    this.isAuthenticated.next(true);
     return this.http.post(`${baseUrl}user/login/`, data);
   }
-  async logout(redirect: string){}
+
+  logout(redirect: string) { }
 }
