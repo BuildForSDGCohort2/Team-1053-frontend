@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/users/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,14 +8,33 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  addressForm = this.fb.group({
+  loginForm = this.fb.group({
     email: [null, Validators.required],
     password: [null, Validators.required],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
-  onSubmit() {
-    alert('Thanks!');
+  error: any;
+  loginUser() {
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value)
+      this.authService.login(this.loginForm.value).subscribe(
+        result => {
+          if (result.key) {
+            console.log(result);
+            alert(result.key);
+          }
+        },
+        err => {
+          this.error = err.error;
+          if (this.error.email) {
+            console.log(this.error.email[0]);
+          } else {
+            console.log(this.error.non_field_errors[0]);
+          }
+        }
+      );
+    }
   }
 }

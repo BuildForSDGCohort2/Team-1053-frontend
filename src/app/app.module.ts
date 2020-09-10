@@ -26,7 +26,7 @@ import { LoginComponent } from './users/login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 
 @NgModule({
@@ -59,6 +59,7 @@ import { SignUpComponent } from './users/sign-up/sign-up.component';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [],
