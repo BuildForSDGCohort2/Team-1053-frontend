@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NotifierService } from 'src/app/services/notifications/notifier.service';
 import { AuthService } from 'src/app/services/users/auth/auth.service';
 
 @Component({
@@ -17,28 +19,25 @@ export class SignUpComponent {
 
   error: any;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private notifierService: NotifierService
+  ) { }
 
   signUp() {
     if (this.signUpForm.valid) {
-      this.authService.register(this.signUpForm.value).subscribe(
-        result => {
-          if (result.key) {
-            console.log(result);
-            alert(result.key);
+      this.authService.register(this.signUpForm.value)
+        .subscribe(response => {
+          if (!response) {
+            this.notifierService.showNotification(
+              this.authService.error[0], 'OK', 'error'
+            );
+          } else {
+            this.router.navigate(['dashboard']);
           }
-        },
-        err => {
-          this.error = err.error;
-          if (this.error.email) {
-            console.log(this.error.email[0]);
-          } else if (this.error.password1) {
-            console.log(this.error.password1[0]);
-          } else if (this.error.non_field_errors) {
-            console.log(this.error.non_field_errors[0]);
-          }
-        }
-      );
+        });
     }
   }
 }

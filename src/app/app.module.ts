@@ -28,6 +28,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { NotificationComponent } from './notification/notification.component';
+import { AuthService } from './services/users/auth/auth.service';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,10 @@ import { SignUpComponent } from './users/sign-up/sign-up.component';
     ProductsTableComponent,
     CardComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    DashboardComponent,
+    NotificationComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -59,10 +67,12 @@ import { SignUpComponent } from './users/sign-up/sign-up.component';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
+    LayoutModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
