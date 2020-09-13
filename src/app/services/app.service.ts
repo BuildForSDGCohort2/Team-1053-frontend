@@ -1,20 +1,25 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/models/app.model';
 import { baseUrl } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AppService {
   currentUser: User = JSON.parse(localStorage.getItem('user'));
   error: string;
   token = localStorage.getItem('token');
-  customer: any;
+  options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'Authorization': `Token ${this.token}`
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -53,8 +58,8 @@ export class AuthService {
     .pipe(
       tap(response => {
         this.currentUser = response['user'] as User;
-        localStorage.setItem('token', JSON.stringify(response['key']));
-        localStorage.setItem('user', JSON.stringify(response['user']));
+        localStorage.setItem('token', response['key']);
+        localStorage.setItem('user', JSON.stringify(this.currentUser));
       })
     )
     .pipe(catchError(err => {
@@ -64,19 +69,20 @@ export class AuthService {
   }
 
   updateUserProfile(data) {
-    return this.http.put(`${baseUrl}customers/${this.currentUser.id}/`, data);
+    return this.http.put(
+      `${baseUrl}customers/${this.currentUser.id}/`,
+      this.options,
+      data
+    );
   }
 
   getCustomerProfile() {
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: `Token ${this.token}`
-      })
-    };
-    return this.http.get(`${baseUrl}customers/${this.currentUser.id}/`)
+    return this.http.get(
+      `${baseUrl}customers/${this.currentUser.id}/`, this.options
+    )
       .pipe(tap(data => {
         if (data instanceof Object) {
-          this.customer = data;
+          return data;
         }
       }));
   }
@@ -85,6 +91,18 @@ export class AuthService {
     this.currentUser = undefined;
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
+  }
+
+  getStock() {
+    return this.http.get('http://127.0.0.1:8000/api/v1/stock/')
+    .pipe(tap(data => {
+      if (data instanceof Array) {
+        return data;
+      }
+    }));
+  }
+  getProducts() {
+    return this.http.get('http://127.0.0.1:8000/api/v1/products/');
   }
 
 }

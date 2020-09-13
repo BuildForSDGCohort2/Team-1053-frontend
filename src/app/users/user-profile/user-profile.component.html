@@ -12,7 +12,10 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Username" formControlName="name">
+                    <input matInput placeholder="username" formControlName="name">
+                    <mat-error *ngIf="addressForm.controls['name'].hasError('required')">
+                      Name is <strong>required</strong>
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -54,7 +57,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row" *ngIf="hasUnitNumber">
+              <div class="row">
                 <div class="col">
                   <mat-form-field class="full-width">
                     <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>

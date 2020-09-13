@@ -31,8 +31,9 @@ import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NotificationComponent } from './notification/notification.component';
-import { AuthService } from './services/users/auth/auth.service';
+import { AppService } from './services/app.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { AuthGuard } from './users/auth.guard';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     ReactiveFormsModule,
     LayoutModule,
   ],
-  providers: [AuthService],
+  providers: [AppService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

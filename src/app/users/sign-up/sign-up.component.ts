@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { AuthService } from 'src/app/services/users/auth/auth.service';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,7 +22,7 @@ export class SignUpComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
+    private authService: AppService,
     private notifierService: NotifierService
   ) { }
 

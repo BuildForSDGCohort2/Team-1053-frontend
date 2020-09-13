@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { AuthService } from 'src/app/services/users/auth/auth.service';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
     email: [null, Validators.required],
     password: [null, Validators.required],
@@ -17,10 +17,15 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AppService,
     private router: Router,
     private notifierService: NotifierService
-  ) {}
+  ) { }
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['dashboard']);
+    }
+  }
 
   loginUser() {
     if (this.loginForm.valid) {
