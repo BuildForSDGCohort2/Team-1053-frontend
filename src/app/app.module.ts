@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +22,18 @@ import { ProductsTableComponent } from './products-table/products-table.componen
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { CardComponent } from './card/card.component';
+import { LoginComponent } from './users/login/login.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignUpComponent } from './users/sign-up/sign-up.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { NotificationComponent } from './notification/notification.component';
+import { AppService } from './services/app.service';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { AuthGuard } from './users/auth.guard';
 
 @NgModule({
   declarations: [
@@ -28,13 +41,19 @@ import { CardComponent } from './card/card.component';
     NavBarComponent,
     HomeComponent,
     ProductsTableComponent,
-    CardComponent
+    CardComponent,
+    LoginComponent,
+    SignUpComponent,
+    DashboardComponent,
+    NotificationComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -46,8 +65,15 @@ import { CardComponent } from './card/card.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatSnackBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LayoutModule,
   ],
-  providers: [],
+  providers: [AppService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,40 @@
+.main-div mat-card{
+  padding: 0px !important;
+  flex: 1;
+}
+.main-div mat-card-content{
+  padding: 1.5rem;
+}
+.main-div mat-card-actions{
+  margin-left: 0px;
+}
+.main-div mat-card-actions .dont-have-ac{
+  margin-top: .8rem;
+}
+.main-div mat-card-actions .dont-have-ac a{
+  text-decoration: none;
+  color: #607D8B;
+}
+.main-div mat-card-actions .dont-have-ac a:hover{
+  text-decoration: underline;
+  color: #5b7a8aca;
+}
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+

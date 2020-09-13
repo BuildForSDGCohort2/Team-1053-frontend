@@ -1,0 +1,36 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+<form fxFlex="50" [formGroup]="loginForm" novalidate (ngSubmit)="loginUser()">
+  <mat-card class="shipping-card">
+    <mat-toolbar color="primary">Login</mat-toolbar>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email Address" formControlName="email">
+            <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+              Email address is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Password" formControlName="password">
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <div class="dont-have-ac">
+          Don't have account? <a routerLink='/register' >Sign Up</a>
+        </div>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</form>
+<br>
+</div>

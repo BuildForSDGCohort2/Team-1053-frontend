@@ -1,0 +1,55 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <form fxFlex="50" [formGroup]="signUpForm" novalidate (ngSubmit)="signUp()">
+    <mat-card class="shipping-card">
+      <mat-toolbar color="primary">Register</mat-toolbar>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Username" formControlName="username">
+              <mat-error *ngIf="signUpForm.controls['username'].hasError('required')">
+                Username address is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Email Address" formControlName="email">
+              <mat-error *ngIf="signUpForm.controls['email'].hasError('required')">
+                Email address is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput type="password" placeholder="Password" formControlName="password1">
+              <mat-error *ngIf="signUpForm.controls['password1'].hasError('required')">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput type="password" placeholder="Confirm Password" formControlName="password2">
+              <mat-error *ngIf="signUpForm.controls['password2'].hasError('required')">
+                Password <strong>must match</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <div class="dont-have-ac">
+            Have account? <a routerLink='/login' >Login</a>
+          </div>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </form>
+  </div>

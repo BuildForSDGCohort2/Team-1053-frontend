@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { NotifierService } from '../services/notifications/notifier.service';
-import { InventoryService } from '../services/inventory/inventory.service';
+import { AppService } from '../services/app.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { ProductInterface } from '../interface/interface';
+import { ProductInterface, StockInterface } from '../models/app.model';
 
 
 @Component({
@@ -14,11 +14,11 @@ import { ProductInterface } from '../interface/interface';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  stock = [];
-  products: ProductInterface[] = [];
+  stock: StockInterface[];
+  products: ProductInterface[];
 
   constructor(
-    public inventoryService: InventoryService,
+    public appService: AppService,
     private notifierService: NotifierService,
     public breakpointObserver: BreakpointObserver
   ) { }
@@ -36,12 +36,10 @@ export class HomeComponent implements OnInit {
     })
     );
   ngOnInit() {
-    this.inventoryService.getStock().subscribe(
-      stock => {
-        console.log(stock);
-        this.stock = stock;
-       },
-      error => {}
+    this.appService.getStock().subscribe(
+      (data: StockInterface[]) => {
+        this.stock = data;
+       }
     );
   }
 }

@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/80cd0267e12b4dc88f956708d3e84a91)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-1053-frontend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-1053-frontend&utm_campaign=Badge_Grade_Dashboard)
 
 # Front-End Application
 
