@@ -1,0 +1,19 @@
+.tracker mat-card{
+    padding: 0px !important;
+    flex: 1;
+  }
+.tracker mat-card-content{
+    padding: 1.5rem;
+}
+.grid-container {
+    margin: 20px;
+}
+.tracking-card {
+    min-width: 120px;
+    margin: 20px auto;
+}
+.tracker-form {
+    width: 200px;
+    font-size: .9rem;
+    background-color: transparent;
+  }

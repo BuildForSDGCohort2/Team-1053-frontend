@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { User } from 'src/app/models/app.model';
+import { Customer, User } from 'src/app/models/app.model';
 import { baseUrl } from 'src/environments/environment';
 
 
@@ -11,8 +11,10 @@ import { baseUrl } from 'src/environments/environment';
 })
 export class AppService {
   currentUser: User = JSON.parse(localStorage.getItem('user'));
+  public currentCustomer: Customer = JSON.parse(localStorage.getItem('customer'));
   error: string;
-  token = localStorage.getItem('token');
+  successMessage: string;
+  token: string = localStorage.getItem('token');
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -70,21 +72,31 @@ export class AppService {
 
   updateUserProfile(data) {
     return this.http.put(
-      `${baseUrl}customers/${this.currentUser.id}/`,
-      this.options,
-      data
-    );
+      `${baseUrl}customers/${this.currentUser.id}/`, data, this.options)
+      .pipe(tap(res => {
+        this.successMessage = 'Profile Successfully Updated';
+      }))
+      .pipe(catchError(err => {
+        this.error = err.error.detail ? err.error.detail : 'Server Connection Error';
+        return of(false);
+      }));
   }
 
   getCustomerProfile() {
-    return this.http.get(
-      `${baseUrl}customers/${this.currentUser.id}/`, this.options
-    )
-      .pipe(tap(data => {
-        if (data instanceof Object) {
-          return data;
-        }
-      }));
+    if (this.currentUser !== undefined) {
+      return this.http.get(
+        `${baseUrl}customers/${this.currentUser.id}/`, this.options
+      )
+        .pipe(tap(data => {
+          if (data instanceof Object) {
+            localStorage.setItem('customer', JSON.stringify(data));
+          }
+        }))
+        .pipe(catchError(err => {
+          this.error = err.error;
+          return of(false);
+        }));
+    }
   }
 
   logout() {
@@ -104,5 +116,7 @@ export class AppService {
   getProducts() {
     return this.http.get('http://127.0.0.1:8000/api/v1/products/');
   }
+
+  getOrderSummary(){}
 
 }

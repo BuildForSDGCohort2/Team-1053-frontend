@@ -1,0 +1,27 @@
+<div class="grid-container">
+    <h1 class="mat-h1">Order Tracker</h1>
+    <div fxLayoutAlign="center center" fxFlexFill class="tracker">
+        <mat-card fxFlex="70" class="tracking-card">
+            <mat-toolbar color="primary">
+                <div fxLayoutAlign="center center" fxFlexFill class="tracker">
+                    <form fxFlex="40" [formGroup]="trackerForm" novalidate (ngSubmit)="trackOrder()">
+                        <mat-form-field class="tracker-form">
+                        <input matInput placeholder="Tracking ID" formControlName="trackingId">
+                        <mat-error *ngIf="trackerForm.controls['trackingId'].hasError('required')">
+                            Tracking ID is <strong>required</strong>
+                        </mat-error>
+                        <button mat-button *ngIf="trackerForm.value.trackingId" matSuffix mat-icon-button aria-label="Clear" (click)="trackerForm.value.trackingId=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        </mat-form-field>
+                        <button mat-raised-button type="submit">Track</button>
+                    </form>
+                </div>
+            </mat-toolbar>
+        <mat-card-content>
+            Order History Details
+        </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>
