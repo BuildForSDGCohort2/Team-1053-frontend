@@ -3,23 +3,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { OrderInterface } from 'src/app/models/app.model';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderedItem } from 'src/app/models/app.model';
 
 
-export class OrderListDataSource extends DataSource<OrderInterface> {
-  data: OrderInterface[];
-  paginator: MatPaginator;
-  sort: MatSort;
+export class OrderItemsDataSource extends DataSource<OrderedItem> {
+    paginator: MatPaginator;
+    sort: MatSort;
 
-  constructor(private orderService: OrderService) {
+  constructor(public data: OrderedItem[]) {
     super();
-    this.orderService.getOrderList()
-      .subscribe(arg => this.data = arg as OrderInterface[]);
-
   }
 
-  connect(): Observable<OrderInterface[]> {
+  connect(): Observable<OrderedItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -35,12 +30,12 @@ export class OrderListDataSource extends DataSource<OrderInterface> {
 
   disconnect() { }
 
-  private getPagedData(data: OrderInterface[]) {
+  private getPagedData(data: OrderedItem[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
 
-  private getSortedData(data: OrderInterface[]) {
+  private getSortedData(data: OrderedItem[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -48,7 +43,7 @@ export class OrderListDataSource extends DataSource<OrderInterface> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.date_created, b.date_created, isAsc);
+        case 'product': return compare(a.product, b.id, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }
@@ -59,4 +54,3 @@ export class OrderListDataSource extends DataSource<OrderInterface> {
 function compare(a: string | number, b: string | number, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
-

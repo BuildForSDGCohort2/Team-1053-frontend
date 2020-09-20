@@ -28,11 +28,12 @@ export class OrderListComponent implements AfterViewInit, OnInit {
     public orderService: OrderService,
     private router: Router,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
 
   ngOnInit() {
     this.dataSource = new OrderListDataSource(this.orderService);
+    console.log(this.dataSource)
   }
   updateData() {
     this.dataSource = new OrderListDataSource(this.orderService);

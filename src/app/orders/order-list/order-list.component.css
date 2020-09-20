@@ -7,9 +7,10 @@
 .status:hover {
   cursor: default;
 }
-::ng-deep .mat-raised-button{
+::ng-deep.order-status.mat-raised-button{
   height: 1.2rem !important;
   line-height: 1rem;
+  width: 7rem !important;
   box-shadow: none !important;
   /* font-size: 0.5rem !important; */
 }
@@ -25,7 +26,7 @@
   background: #e0bebe;
   color: white;
 }
-.cancelled-text{
+.canceled{
   background: #F82632;
   color: white;
 }
