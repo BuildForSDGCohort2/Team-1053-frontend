@@ -1,30 +1,18 @@
 .grid-container {
   margin: 20px;
 }
-
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
-
 .gridList {
   height: 100%;
-}
-
-.dashboard-card-content {
-  text-align: center;
 }
 
 .full-width {
   width: 100%;
 }
 
-.shipping-card {
+.profile-card {
   min-width: 120px;
   margin: 20px auto;
+  padding: 2rem;
 }
 
 .mat-radio-button {
@@ -45,3 +33,16 @@
 .col:last-child {
   margin-right: 0;
 }
+.header{
+  text-align: center;
+  justify-content: center;
+  padding-top: 2rem;
+}
+img.profile-img {
+  max-width: 20%;
+  height: auto;
+}
+.circle {
+  border-radius: 50%;
+}
+

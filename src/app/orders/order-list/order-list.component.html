@@ -1,0 +1,79 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Orders</h1>
+  <div class="mat-elevation-z8">
+    <table mat-table class="full-width-table" matSort aria-label="Elements">
+      <!-- Id Column -->
+      <ng-container matColumnDef="orderId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Id</th>
+        <td mat-cell *matCellDef="let row">{{row.order_id}}</td>
+      </ng-container>
+
+      <!-- Customer Column -->
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+        <td mat-cell *matCellDef="let row">{{row.first_name}}</td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="dateCreated">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</th>
+        <td mat-cell *matCellDef="let row">{{row.date_created | date}}</td>
+      </ng-container>
+
+      <!-- Cost Column -->
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cost</th>
+        <td mat-cell *matCellDef="let row">{{row.grand_total | currency}}</td>
+      </ng-container>
+
+      <!-- Items Column -->
+      <ng-container matColumnDef="items">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Items</th>
+        <td mat-cell *matCellDef="let row">{{row.order_items.length}}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            class="order-status"
+            mat-raised-button
+            [ngClass]="{ 
+              'new': row.status==='New', 
+              'on-hold': row.status==='On Hold',
+              'canceled': row.status==='Canceled',
+              'confirmed': row.status==='Confirmed',
+              'dispatched': row.status==='Dispatched',
+              'delivered': row.status==='Delivered' 
+            }" >
+            {{row.status}}
+          </button>
+        </td>
+      </ng-container>
+      
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="onViewOrEditOrder(row)" focusable="false">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteOrder(row)" focusable="false">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator #paginator
+        [length]="dataSource?.data.length"
+        [pageIndex]="0"
+        [pageSize]="4"
+        [pageSizeOptions]="[5, 10, 20, 50]">
+    </mat-paginator>
+  </div>
+</div>

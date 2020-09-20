@@ -71,13 +71,20 @@ export class AppService {
   }
 
   updateUserProfile(data) {
+    console.log(data)
+    this.options['Content-Type'] = 'undefined'
     return this.http.put(
       `${baseUrl}customers/${this.currentUser.id}/`, data, this.options)
       .pipe(tap(res => {
         this.successMessage = 'Profile Successfully Updated';
       }))
       .pipe(catchError(err => {
-        this.error = err.error.detail ? err.error.detail : 'Server Connection Error';
+        if (err.error instanceof Object) {
+          const errorKey = Object.keys(data).filter(er => er === Object.keys(err.error)[0])[0];
+          this.error = err.error[errorKey];
+        }else{
+          this.error = 'Server Connection Error';
+        }
         return of(false);
       }));
   }

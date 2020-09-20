@@ -17,6 +17,8 @@ $logistics-ui-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $logistics-ui-warn: mat-palette($mat-red);
+$logistics-ui-success: mat-palette($mat-green);
+
 
 // Create the theme object (a Sass map containing all of the palettes).
 $logistics-ui-theme: mat-light-theme($logistics-ui-primary, $logistics-ui-accent, $logistics-ui-warn);
@@ -33,5 +35,6 @@ $logistics-ui-theme-dark: mat-dark-theme($logistics-ui-primary, $logistics-ui-ac
 // .theme-light{
 //     @include angular-material-theme($logistics-ui-theme);
 // }
+
 @include angular-material-theme($logistics-ui-theme);
 

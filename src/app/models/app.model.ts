@@ -14,6 +14,7 @@ export interface Customer {
     mobile: string;
     city: string;
     street: string;
+    profile_pic: string;
     postal_code: string;
     grandTotal: number;
 }
@@ -41,6 +42,17 @@ export interface OrderItem {
     product: string;
     price_per_item: number;
     quantity: number;
+
+}
+
+export interface OrderedItem {
+    cost: number;
+    id: number;
+    is_ordered: boolean;
+    item: string;
+    price_per_item: number;
+    product: number;
+    quantity: number;
 }
 
 export interface OrderInterface {
@@ -50,7 +62,9 @@ export interface OrderInterface {
     order_id: string;
     grand_total: number;
     date_created: string;
-    items: object[];
+    order_items: OrderedItem[];
     payment_option: string;
+    first_name: string;
+    last_name: string;
 }
 

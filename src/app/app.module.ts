@@ -28,7 +28,9 @@ import { LoginComponent } from './users/login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+// import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -42,6 +44,9 @@ import { OrdersTableComponent } from './orders/orders-table/orders-table.compone
 import { OrderTrackerComponent } from './orders/order-tracker/order-tracker.component';
 import { CreateOrderComponent } from './orders/create-order/create-order.component';
 import { OrderItemsComponent } from './orders/order-items/order-items.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { DeleteDialogComponent } from './orders/delete-order/delete-dialog.component';
+import { ViewOrderComponent } from './orders/view-order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +64,10 @@ import { OrderItemsComponent } from './orders/order-items/order-items.component'
     OrdersTableComponent,
     OrderTrackerComponent,
     CreateOrderComponent,
-    OrderItemsComponent
+    OrderItemsComponent,
+    OrderListComponent,
+    DeleteDialogComponent,
+    ViewOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -85,9 +93,11 @@ import { OrderItemsComponent } from './orders/order-items/order-items.component'
     MatSnackBarModule,
     MatChipsModule,
     MatDialogModule,
+    // MatMomentDateModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
+    NgxMatFileInputModule,
   ],
   providers: [AppService, AuthGuard],
   bootstrap: [AppComponent]
