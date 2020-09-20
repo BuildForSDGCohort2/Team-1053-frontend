@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AppService } from '../services/app.service';
 import { Router } from '@angular/router';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+
+  @Output()
+  readonly darkModeSwitched = new EventEmitter<boolean>();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -26,12 +30,17 @@ export class NavBarComponent implements OnInit {
 
   logout() {
     this.auth.logout().subscribe(() => {
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
     }
     );
   }
+  onDarkModeSwitched({checked}: MatSlideToggleChange) {
+    this.darkModeSwitched.emit(checked);
+  }
+
   ngOnInit() {
     this.auth.checkAuthenticationStatus();
+    this.auth.getCustomerProfile().subscribe();
   }
 
 }

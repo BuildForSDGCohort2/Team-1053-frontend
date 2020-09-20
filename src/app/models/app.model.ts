@@ -7,14 +7,15 @@ export interface User {
 }
 
 export interface Customer {
-    name: string;
+    username: string;
     first_name: string;
     last_name: string;
     address: string;
-    phone: string;
+    mobile: string;
     city: string;
-    state: string;
-    postalCode: string;
+    street: string;
+    postal_code: string;
+    grandTotal: number;
 }
 
 export interface ProductInterface {
@@ -33,3 +34,23 @@ export interface StockInterface {
     quantity: number;
     date_added: Date;
 }
+
+export interface OrderItem {
+    id: number;
+    cost: number;
+    product: string;
+    price_per_item: number;
+    quantity: number;
+}
+
+export interface OrderInterface {
+    name: string;
+    id: number;
+    status: string;
+    order_id: string;
+    grand_total: number;
+    date_created: string;
+    items: object[];
+    payment_option: string;
+}
+

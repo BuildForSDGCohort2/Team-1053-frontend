@@ -2,3 +2,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+::ng-deep snack-bar-container.background-green {
+    background: green;
+}
+
+::ng-deep snack-bar-container.background-red {
+    background: red;
+}

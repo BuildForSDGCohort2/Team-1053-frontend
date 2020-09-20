@@ -16,7 +16,8 @@ export class NotifierService {
         buttonText: button,
         type: messageType
       },
-      duration: 5000,
+      panelClass: (messageType === 'success' ? ['background-green'] : ['background-red']),
+      duration: 40000,
       horizontalPosition: 'center',
       verticalPosition: 'top'
     });
