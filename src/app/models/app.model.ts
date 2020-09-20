@@ -14,6 +14,7 @@ export interface Customer {
     mobile: string;
     city: string;
     street: string;
+    profile_pic: string;
     postal_code: string;
     grandTotal: number;
 }

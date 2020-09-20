@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { CreateOrderComponent } from './orders/create-order/create-order.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
 import { OrderTrackerComponent } from './orders/order-tracker/order-tracker.component';
 import { AuthGuard } from './users/auth.guard';
 import { LoginComponent } from './users/login/login.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'create-order', component: CreateOrderComponent, canActivate: [AuthGuard] },
   { path: 'order-tracker', component: OrderTrackerComponent, canActivate: [AuthGuard] },
+  { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'home' },
 ];
 

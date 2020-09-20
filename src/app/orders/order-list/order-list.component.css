@@ -1,0 +1,39 @@
+.full-width-table {
+  width: 100%;
+}
+.grid-container {
+  margin: 3rem;
+}
+.status:hover {
+  cursor: default;
+}
+::ng-deep .mat-raised-button{
+  height: 1.2rem !important;
+  line-height: 1rem;
+  box-shadow: none !important;
+  /* font-size: 0.5rem !important; */
+}
+.new{
+  background: rgb(68, 102, 165);
+  color: white;
+} 
+.on-hold{
+  background: #F97F27;
+  color: white;
+}
+.confirmed{
+  background: #e0bebe;
+  color: white;
+}
+.cancelled-text{
+  background: #F82632;
+  color: white;
+}
+.dispatched{
+  background: #b3e9ce;
+  color: white;
+} 
+.delivered{
+  background: #2B543A;
+  color: white;
+}

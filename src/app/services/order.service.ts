@@ -26,24 +26,24 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   saveOrder(data: any) {
-    console.log("service", data)
     return this.http.post(`${baseUrl}orders/`, data, this.options);
   }
 
   getOrderList() {
-    return;
+    return this.http.get(`${baseUrl}orders/`, this.options);
   }
 
   getOrderByID(id: number) {
-    return;
+    return this.http.get(`${baseUrl}orders/${id}/`, this.options);
   }
 
-  updateOrder() {
-    return;
+  updateOrder(id: number, data: any) {
+    return this.http.put(`${baseUrl}orders/${id}/`, data, this.options);
   }
 
   deleteOrder(id: number) {
-    return;
+    return this.http.delete(`${baseUrl}orders/${id}/`, this.options);
+
   }
 
   getOrderItemList(){
@@ -65,10 +65,9 @@ export class OrderService {
       product: parseInt(data.id),
       quantity: data.quantity
     };
-    return this.http.post(`${baseUrl}order-items/`, payload)
+    return this.http.post(`${baseUrl}order-items/`, payload, this.options)
       .pipe(
         tap(response => {
-          console.log(this.grandTotal)
           this.grandTotal += data.cost;
           localStorage.setItem('grandTotal', this.grandTotal.toString());
           return response as OrderItem;
@@ -82,7 +81,7 @@ export class OrderService {
 
   updateOrderItem(data: any, itemId) {
     data.product = typeof data.id === 'string' ? parseInt(data.id, 10) : data.product;
-    return this.http.put(`${baseUrl}order-items/${itemId}/`, data)
+    return this.http.put(`${baseUrl}order-items/${itemId}/`, data, this.options)
       .pipe(
         tap(response => {
           console.log(response);
@@ -96,7 +95,7 @@ export class OrderService {
   }
 
   deleteOrderItem(itemId: number){
-    return this.http.delete(`${baseUrl}order-items/${itemId}/`);
+    return this.http.delete(`${baseUrl}order-items/${itemId}/`, this.options);
   }
 
   updateOderCost(upDate): Observable<number> {

@@ -1,12 +1,17 @@
 <div class="grid-container">
   <h1 class="mat-h1">My Profile</h1>
-  <mat-grid-list cols="6" class="gridList"  rowHeight="50rem">
-    <mat-grid-tile [colspan]="4" [rowspan]="">
-      <div class="dashboard-card">
+  <mat-grid-list cols="1" class="gridList"  rowHeight="50rem">
+    <mat-grid-tile [colspan]="1" [rowspan]="">
+      <div>
         <form [formGroup]="addressForm" novalidate (ngSubmit)="updateProfile()">
-          <mat-card class="shipping-card">
-            <mat-card-header>
-              <mat-card-title>Update profile Information</mat-card-title>
+          <mat-card class="profile-card">
+            <mat-card-header class="header">
+              <mat-card-title>
+                <img mat-card-image class="profile-img" src="{{user.profile_pic}}" alt="{{user.first_name}}">
+                <div>
+                  {{user.first_name}} {{user.last_name}}
+                </div>
+              </mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <div class="row">
@@ -78,7 +83,7 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number" formControlName="postal_code">
+                    <input matInput #postal_code maxlength="5" placeholder="Postal Code" type="number" formControlName="postal_code">
                     <mat-error *ngIf="addressForm.controls['postal_code'].hasError('required')">
                       Postal Code is <strong>required</strong>
                     </mat-error>
@@ -87,11 +92,15 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <mat-radio-group formControlName="shipping">
-                    <mat-radio-button value="free">Free Shipping</mat-radio-button>
-                    <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
-                    <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
-                  </mat-radio-group>
+                  <mat-form-field>
+                    <ngx-mat-file-input accept="image/png, image/jpeg" formControlName="profile_pic" placeholder="Upload Profile picture">
+                      <mat-icon ngxMatFileInputIcon>file_upload</mat-icon>
+                      <mat-error *ngIf="addressForm.controls['profile_pic'].hasError">
+                        {{addressForm.controls['profile_pic'].hasError | json}}
+                        <!-- Postal Code is <strong>required</strong> -->
+                      </mat-error>
+                    </ngx-mat-file-input>
+                  </mat-form-field>
                 </div>
               </div>
             </mat-card-content>
@@ -100,20 +109,6 @@
             </mat-card-actions>
           </mat-card>
         </form>
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="">
-      <div class="dashboard-card">
-        <mat-card class="shipping-card">
-          <mat-card-header>
-            <mat-card-title>
-              Username
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <div>Profile picture Here</div>
-          </mat-card-content>
-        </mat-card>
       </div>
     </mat-grid-tile>
   </mat-grid-list>

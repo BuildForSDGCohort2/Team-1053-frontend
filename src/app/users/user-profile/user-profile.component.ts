@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { Customer } from 'src/app/models/app.model';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
 import { AppService } from 'src/app/services/app.service';
@@ -11,6 +12,7 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class UserProfileComponent implements OnInit {
   public user: Customer = this.appService.currentCustomer;
+  imageData = new FormData()
 
   addressForm = this.fb.group({
     username: [this.user.username, Validators.required],
@@ -28,7 +30,7 @@ export class UserProfileComponent implements OnInit {
         Validators.maxLength(5),
       ]),
     ],
-    shipping: ['free', Validators.required],
+    profile_pic: [null,Validators.required]
   });
 
   constructor(
@@ -39,12 +41,18 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.appService.getCustomerProfile().subscribe();
   }
-
   updateProfile() {
-    this.appService
+    if (this.addressForm.valid) {
+      console.log(this.addressForm.value.profile_pic)
+      this.imageData.append(
+        'file', this.addressForm.value.profile_pic);
+      console.log(this.imageData)
+      this.addressForm.value.profile_pic = this.imageData;
+      this.appService
       .updateUserProfile(this.addressForm.value)
       .subscribe((res) => {
         if (!res) {
+          console.log(this.appService.error)
           this.notifier.showNotification(this.appService.error, 'OK', 'error');
         } else {
           this.notifier.showNotification(
@@ -55,5 +63,8 @@ export class UserProfileComponent implements OnInit {
           this.appService.getCustomerProfile().subscribe();
         }
       });
+    }else{
+      this.notifier.showNotification('Complete all the field values', 'OK', 'error');
+    }
   }
 }

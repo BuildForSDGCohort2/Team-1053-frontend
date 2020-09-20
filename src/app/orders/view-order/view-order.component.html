@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Order Details</h1>
+<div mat-dialog-content>
+  <p></p>
+  <mat-form-field>
+    <mat-label>Order Id</mat-label>
+    <input matInput placeholder="Order Id" [(ngModel)]="data.order_id">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Order Cost</mat-label>
+    <input matInput placeholder="Order Id" [(ngModel)]="data.order_id">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="ascent" (click)="onClose()">Close</button>
+  <button mat-button color="primary" (click)="updateOrder()" cdkFocusInitial mat-dialog-close cdkFocusInitial>Update Order</button>
+</div>
