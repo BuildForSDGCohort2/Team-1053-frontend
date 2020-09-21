@@ -9,6 +9,7 @@ import { baseUrl } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AppService {
   currentUser: User = JSON.parse(localStorage.getItem('user'));
   public currentCustomer: Customer = JSON.parse(localStorage.getItem('customer'));
@@ -113,7 +114,7 @@ export class AppService {
   }
 
   getStock() {
-    return this.http.get('http://127.0.0.1:8000/api/v1/stock/')
+    return this.http.get(`${baseUrl}stock/`)
     .pipe(tap(data => {
       if (data instanceof Array) {
         return data;
@@ -121,7 +122,7 @@ export class AppService {
     }));
   }
   getProducts() {
-    return this.http.get('http://127.0.0.1:8000/api/v1/products/');
+    return this.http.get(`${baseUrl}products/`);
   }
 
   getOrderSummary(){}

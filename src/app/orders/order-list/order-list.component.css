@@ -12,7 +12,10 @@
   line-height: 1rem;
   width: 7rem !important;
   box-shadow: none !important;
-  /* font-size: 0.5rem !important; */
+}
+.full-width-table .mat-header-cell {
+  background: #607D8B;
+  color: white;
 }
 .new{
   background: rgb(68, 102, 165);

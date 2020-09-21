@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "saleslogistists": {
+      "hosting": {
+        "logistics-ui": [
+          "saleslogistists"
+        ]
+      }
+    }
+  }
+}
