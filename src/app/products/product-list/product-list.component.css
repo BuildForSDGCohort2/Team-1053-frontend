@@ -1,0 +1,35 @@
+.product-container {
+    margin: 2rem;
+}
+
+
+.product-card {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+ }
+ .image-box{
+    margin-top: 1rem;
+    text-align: center;
+    width: auto;
+    height: calc(100% - 8rem)
+} 
+
+img{ 
+    height: -webkit-calc(100% - 1rem);
+    height: -moz-calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    width: auto;
+    object-fit: contain;
+    object-position: center;
+}
+.product-price.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.price-chip .cdk-drop-list-dragging {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

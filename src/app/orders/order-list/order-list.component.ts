@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { OrderListDataSource } from './order-list-datasource';
 import { OrderService } from 'src/app/services/order.service';
 import { OrderInterface } from 'src/app/models/app.model';
-import { Router } from '@angular/router';
 import { DeleteDialogComponent } from '../delete-order/delete-dialog.component';
 import { ViewOrderComponent } from '../view-order/view-order.component';
 
@@ -26,7 +25,6 @@ export class OrderListComponent implements AfterViewInit, OnInit {
 
   constructor(
     public orderService: OrderService,
-    private router: Router,
     public dialog: MatDialog
   ) {}
 
@@ -46,7 +44,7 @@ export class OrderListComponent implements AfterViewInit, OnInit {
         top: '10rem'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.updateData();
     });
   }

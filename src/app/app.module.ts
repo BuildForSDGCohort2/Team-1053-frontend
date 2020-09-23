@@ -46,7 +46,8 @@ import { OrderItemsComponent } from './orders/order-items/order-items.component'
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { DeleteDialogComponent } from './orders/delete-order/delete-dialog.component';
 import { ViewOrderComponent } from './orders/view-order/view-order.component';
-import { baseUrl } from 'src/environments/environment';
+import { ProductListComponent } from './products/product-list/product-list.component';
+import { AddProductComponent } from './products/add-product/add-product.component';
 
 
 @NgModule({
@@ -68,7 +69,9 @@ import { baseUrl } from 'src/environments/environment';
     OrderItemsComponent,
     OrderListComponent,
     DeleteDialogComponent,
-    ViewOrderComponent
+    ViewOrderComponent,
+    ProductListComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
