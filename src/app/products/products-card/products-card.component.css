@@ -22,8 +22,8 @@
 img{ 
     width: auto;
     height: auto;
-    max-width: 8rem;
-    max-height: 6rem;
+    max-width: 5rem;
+    max-height: 5rem;
     object-position: cover;
 }
 .product-price.cdk-drag-animating {

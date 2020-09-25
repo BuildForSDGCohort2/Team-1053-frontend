@@ -1,0 +1,15 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+    <mat-card class="product-card">
+        <mat-card-content>
+            <img src="{{data.image}}" alt="{{data.name}}">
+            <h1 class="mat-h1">{{data.name}}</h1>
+            <p class="price">{{data.price | currency}}</p>
+            <p>{{data.description}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div mat-dialog-actions align="end">
+  <a mat-button color="ascent" (click)="onClose()">Close</a>
+  <button mat-button type="submit" color="primary" mat-dialog-close cdkFocusInitial>Add to Order</button>
+</div>

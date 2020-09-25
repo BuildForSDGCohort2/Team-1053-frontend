@@ -33,8 +33,13 @@
                 </mat-chip-list>    
             </mat-card-content>
             <mat-card-actions class="product-actions">
-                <button mat-button mat-flat-button
-                color="primary">Details</button>
+                <button 
+                    mat-button mat-flat-button
+                    color="primary" 
+                    (click)="onViewProduct(product)"
+                >
+                    Details
+                </button>
                 <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button
                 color="accent">Edit</button>
                 <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button

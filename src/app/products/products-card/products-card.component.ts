@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductInterface } from 'src/app/models/app.model';
 import { AppService } from 'src/app/services/app.service';
 import { ProductService } from 'src/app/services/product.service';
+import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
   selector: 'app-products-card',
@@ -23,6 +25,7 @@ export class ProductsCardComponent implements OnInit {
   constructor(
     private productService: ProductService,
     public auth: AppService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -46,4 +49,18 @@ export class ProductsCardComponent implements OnInit {
   onResize(event) { // to adjust to screen size
     this.breakpoint = (event.target.innerWidth <= 800) ? 1 : 4;
   }
+
+  viewProduct(product: ProductInterface) {
+    const dialogRef = this.dialog.open(ProductDetailsComponent, {
+      width: '40rem',
+      data: product,
+      position: {
+        top: '10rem'
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('closing');
+    });
+  }
+
 }

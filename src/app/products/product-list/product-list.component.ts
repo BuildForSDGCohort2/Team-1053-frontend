@@ -5,6 +5,7 @@ import { ProductInterface } from 'src/app/models/app.model';
 import { AppService } from 'src/app/services/app.service';
 import { ProductService } from 'src/app/services/product.service';
 import { AddProductComponent } from '../add-product/add-product.component';
+import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
   selector: 'app-product-list',
@@ -59,6 +60,19 @@ export class ProductListComponent implements OnInit {
         this.pagedList = this.productsList.slice(0, 8);
         this.length = this.productsList.length;
       });
+    });
+  }
+
+  onViewProduct(product: ProductInterface) {
+    const dialogRef = this.dialog.open(ProductDetailsComponent, {
+      width: '40rem',
+      data: product,
+      position: {
+        top: '10rem'
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('closing');
     });
   }
 

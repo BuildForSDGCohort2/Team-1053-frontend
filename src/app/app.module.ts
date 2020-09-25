@@ -48,6 +48,7 @@ import { ViewOrderComponent } from './orders/view-order/view-order.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { ProductsCardComponent } from './products/products-card/products-card.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ProductsCardComponent } from './products/products-card/products-card.co
     ViewOrderComponent,
     ProductListComponent,
     AddProductComponent,
-    ProductsCardComponent
+    ProductsCardComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,

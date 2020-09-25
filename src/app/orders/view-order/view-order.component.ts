@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -35,7 +35,7 @@ export class ViewOrderComponent implements AfterViewInit, OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.dataSource = new OrderItemsDataSource(
       this.data.order_items as OrderedItem[]);
   }

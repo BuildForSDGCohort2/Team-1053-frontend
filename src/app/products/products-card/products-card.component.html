@@ -25,11 +25,7 @@
             </mat-card-content>
             <mat-card-actions class="product-actions">
                 <button mat-button mat-flat-button
-                color="primary">Details</button>
-                <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button
-                color="accent">Edit</button>
-                <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button
-                color="warn">Delete</button>
+                color="primary" (click)="viewProduct(product)">Details</button>
             </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
