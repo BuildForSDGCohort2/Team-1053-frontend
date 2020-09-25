@@ -12,7 +12,8 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class UserProfileComponent implements OnInit {
   public user: Customer = this.appService.currentCustomer;
-  imageData = new FormData()
+  multiple = false;
+  accept: string;
 
   addressForm = this.fb.group({
     username: [this.user.username, Validators.required],
@@ -30,7 +31,7 @@ export class UserProfileComponent implements OnInit {
         Validators.maxLength(5),
       ]),
     ],
-    profile_pic: [null,Validators.required]
+    profile_pic: [null, Validators.required]
   });
 
   constructor(
@@ -43,11 +44,15 @@ export class UserProfileComponent implements OnInit {
   }
   updateProfile() {
     if (this.addressForm.valid) {
-      console.log(this.addressForm.value.profile_pic)
-      this.imageData.append(
-        'file', this.addressForm.value.profile_pic);
-      console.log(this.imageData)
-      this.addressForm.value.profile_pic = this.imageData;
+      this.addressForm.get('profile_pic').setValue(
+        this.addressForm.value.profile_pic.name
+       )
+      console.log(this.addressForm.value)
+      
+      // this.imageData.append(
+      //   'file', this.addressForm.value.profile_pic);
+      // console.log(this.imageData)
+      // this.addressForm.value.profile_pic = this.imageData;
       this.appService
       .updateUserProfile(this.addressForm.value)
       .subscribe((res) => {

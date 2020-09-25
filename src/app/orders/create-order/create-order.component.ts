@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Customer, OrderItem, ProductInterface } from 'src/app/models/app.model';
 import { AppService } from 'src/app/services/app.service';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
 import { OrderService } from 'src/app/services/order.service';
+import { ProductService } from 'src/app/services/product.service';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 
 @Component({
@@ -45,6 +46,7 @@ export class CreateOrderComponent implements OnInit {
     private orderService: OrderService,
     private dialog: MatDialog,
     private appService: AppService,
+    private productService: ProductService,
     private notifierService: NotifierService
   ) {
     this.orderService.updateOderCost(null).subscribe(data => this.grandTotal = data as number);
@@ -53,7 +55,7 @@ export class CreateOrderComponent implements OnInit {
     this.orderService.getOrderItemList().subscribe(data => {
       this.orderItems = data as OrderItem[];
     });
-    this.appService.getProducts().subscribe(res => this.productList = res as ProductInterface[]);
+    this.productService.getProducts().subscribe(res => this.productList = res as ProductInterface[]);
     this.appService.getCustomerProfile().subscribe();
     this.user = this.appService.currentCustomer;
   }
@@ -82,15 +84,19 @@ export class CreateOrderComponent implements OnInit {
     let data: any;
     data = this.addressForm.value;
     data.order_items = this.orderItems.map(item => item.id);
-    this.orderService.saveOrder(data).subscribe(
-      (res) => {
-        this.notifierService.showNotification('Successfully placed an order', 'OK', 'success');
-        this.router.navigate(['orders']);
-      },
-      (err) => {
-        this.notifierService.showNotification(err.error.details, 'OK', 'error');
-      }
-    );
+    if (data.order_items.length === 0) {
+      this.notifierService.showNotification('Please add items to your order!', 'OK', 'error');
+    } else {
+      this.orderService.saveOrder(data).subscribe(
+        () => {
+          this.notifierService.showNotification('Successfully placed an order', 'OK', 'success');
+          this.router.navigate(['orders']);
+        },
+        (err) => {
+          this.notifierService.showNotification(err.error.details, 'OK', 'error');
+        }
+      );
+    }
   }
 
   AddOrEditOrderItem(orderItemIndex, itemCost, OrderID) {
@@ -122,12 +128,9 @@ export class CreateOrderComponent implements OnInit {
       });
     } else {
       this.orderService.updateOderCost(null).subscribe(data => {
-        console.log("dadada", data)
         this.grandTotal = data;
       });
     }
     return this.grandTotal;
   }
-
-
 }

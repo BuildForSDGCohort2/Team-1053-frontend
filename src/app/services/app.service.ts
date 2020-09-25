@@ -19,6 +19,7 @@ export class AppService {
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      Accept: 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'Authorization': `Token ${this.token}`
     })
@@ -72,10 +73,18 @@ export class AppService {
   }
 
   updateUserProfile(data) {
-    console.log(data)
-    this.options['Content-Type'] = 'undefined'
+    console.log(data);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Content-Disposition': `attachment; filename=${data.profile_pic}`,
+        'Access-Control-Allow-Headers': '*',
+        // tslint:disable-next-line: object-literal-key-quotes
+        'Authorization': `Token ${this.token}`
+      })
+    };
     return this.http.put(
-      `${baseUrl}customers/${this.currentUser.id}/`, data, this.options)
+      `${baseUrl}customers/${this.currentUser.id}/`, data, options)
       .pipe(tap(res => {
         this.successMessage = 'Profile Successfully Updated';
       }))
@@ -111,18 +120,6 @@ export class AppService {
     this.currentUser = undefined;
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
-  }
-
-  getStock() {
-    return this.http.get(`${baseUrl}stock/`)
-    .pipe(tap(data => {
-      if (data instanceof Array) {
-        return data;
-      }
-    }));
-  }
-  getProducts() {
-    return this.http.get(`${baseUrl}products/`);
   }
 
   getOrderSummary(){}

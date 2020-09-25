@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { NotifierService } from '../services/notifications/notifier.service';
 import { AppService } from '../services/app.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import { ProductInterface, StockInterface } from '../models/app.model';
+import { StockInterface } from '../models/app.model';
+import { ProductService } from '../services/product.service';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -15,28 +12,15 @@ import { ProductInterface, StockInterface } from '../models/app.model';
 })
 export class HomeComponent implements OnInit {
   stock: StockInterface[];
-  products: ProductInterface[];
 
   constructor(
-    public appService: AppService,
-    private notifierService: NotifierService,
-    public breakpointObserver: BreakpointObserver
+    private productService: ProductService,
+    public auth: AppService,
+    public dialog: MatDialog
   ) { }
-  cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(({ matches }) => {
-        if (matches) {
-        return {
-            columns: 1,
-            table: { cols: 1, rows: 2 },
-        };
-        }
-        return {
-        columns: 4,
-        table: { cols: 4, rows: 2 },
-        };
-    })
-    );
+
   ngOnInit() {
-    this.appService.getStock().subscribe(
+    this.productService.getStock().subscribe(
       (data: StockInterface[]) => {
         this.stock = data;
        }

@@ -16,7 +16,7 @@ export class DeleteDialogComponent implements OnInit {
     private orderService: OrderService
   ) { }
 
-  onCancel(): void { 
+  onCancel(): void {
     this.dialogRef.close();
   }
 

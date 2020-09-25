@@ -24,7 +24,7 @@ export interface ProductInterface {
     id: number;
     name: string;
     price: number;
-    stock: string;
+    stock: number;
     code: string;
     date_created: Date;
     tags: string[];

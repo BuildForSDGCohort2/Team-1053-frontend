@@ -1,10 +1,80 @@
 <h2 class="mat-h2" mat-dialog-title>New Product</h2>
-<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="productForm" novalidate (ngSubmit)="onSubmit()">
 <div mat-dialog-content>
+  <div class="row">
+    <!-- name -->
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Product Name" formControlName="name">
+        <mat-error *ngIf="productForm.controls['name'].hasError('required')">
+          Product name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- price -->
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput type="number" placeholder="Product Price" formControlName="price">
+        <mat-error *ngIf="productForm.controls['price'].hasError('required')">
+          Product price is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <!-- stock -->
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Stock</mat-label>
+        <mat-select formControlName="stock">
+          <mat-option value="primary">Primary</mat-option>
+          <mat-option value="accent">Accent</mat-option>
+          <mat-option value="warn">Warn</mat-option>
+        </mat-select>
+        <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
+          Product stock is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- image -->
+    <div class="col">
+      <mat-form-field class="full-width">
+        <ngx-mat-file-input accept="image/png, image/jpeg" formControlName="image" placeholder="Product image">
+          <mat-icon ngxMatFileInputIcon>file_upload</mat-icon>
+          <mat-error *ngIf="productForm.controls['image'].hasError">
+            Product image is <strong>required</strong>
+          </mat-error>
+        </ngx-mat-file-input>
+      </mat-form-field>
+    </div>
     
-    <input  mat-input placeholder="Product Name">
-    <input mat-input > 
-    
+  </div>
+  <!-- description -->
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        <mat-error *ngIf="productForm.controls['description'].hasError('required')">
+          Product description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- tags -->
+  <div class="row">
+    <div class="col">
+      <mat-selection-list formControlName="tags">
+        <h3 mat-subheader>Tags</h3>
+        <mat-list-option checkboxPosition="before" value="bananas">Bananas</mat-list-option>
+        <mat-list-option checkboxPosition="before" value="oranges">Oranges</mat-list-option>
+        <mat-list-option checkboxPosition="before" value="apples">Apples</mat-list-option>
+        <mat-list-option checkboxPosition="before" value="strawberries">Strawberries</mat-list-option>
+      </mat-selection-list>
+      <!-- <mat-error *ngIf="productForm.controls['tags'].hasError">
+        Product tag is <strong>required</strong>
+      </mat-error> -->
+    </div>
+  </div>
 </div>
 <div mat-dialog-actions align="end">
   <a mat-button mat-dialog-close>Cancel</a>

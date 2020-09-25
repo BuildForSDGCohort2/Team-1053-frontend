@@ -20,7 +20,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
-import { ProductsTableComponent } from './products-table/products-table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { CardComponent } from './card/card.component';
@@ -48,6 +47,7 @@ import { DeleteDialogComponent } from './orders/delete-order/delete-dialog.compo
 import { ViewOrderComponent } from './orders/view-order/view-order.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
+import { ProductsCardComponent } from './products/products-card/products-card.component';
 
 
 @NgModule({
@@ -55,7 +55,6 @@ import { AddProductComponent } from './products/add-product/add-product.componen
     AppComponent,
     NavBarComponent,
     HomeComponent,
-    ProductsTableComponent,
     CardComponent,
     LoginComponent,
     SignUpComponent,
@@ -71,7 +70,8 @@ import { AddProductComponent } from './products/add-product/add-product.componen
     DeleteDialogComponent,
     ViewOrderComponent,
     ProductListComponent,
-    AddProductComponent
+    AddProductComponent,
+    ProductsCardComponent
   ],
   imports: [
     BrowserModule,
