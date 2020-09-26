@@ -26,6 +26,7 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   saveOrder(data: any) {
+    localStorage.setItem('grandTotal', '0');
     return this.http.post(`${baseUrl}orders/`, data, this.options);
   }
 
@@ -96,6 +97,10 @@ export class OrderService {
 
   deleteOrderItem(itemId: number){
     return this.http.delete(`${baseUrl}order-items/${itemId}/`, this.options);
+  }
+
+  getOrderHistory(data) {
+    return this.http.get(`${baseUrl}order-history/${data.trackingId}`, this.options);
   }
 
   updateOderCost(upDate): Observable<number> {

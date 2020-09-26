@@ -18,8 +18,63 @@
                     </form>
                 </div>
             </mat-toolbar>
-        <mat-card-content>
-            Order History Details
+        <mat-card-content *ngIf="historyData.length > 0">
+                <mat-card class="customer-details">
+                    <mat-card-header>
+                      <mat-card-title>Customer details</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p><strong>Name:</strong>{{customerDetails.first_name}}&nbsp;{{customerDetails.last_name}}</p>
+                        <p>
+                            <strong>Mobile:</strong>{{customerDetails.mobile}}
+                        </p>
+                        <p>
+                            <strong>Address:</strong>{{customerDetails.address}}
+                        </p>
+                        <p>
+                            <strong>City:</strong>{{customerDetails.city}}
+                        </p>
+                        <p>
+                            <strong>Street:</strong>{{customerDetails.street}}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+                <div class="mat-elevation-z8" >
+                    <table mat-table class="full-width-table" [dataSource]="dataSource">
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="date">
+                          <th mat-header-cell color="primary" *matHeaderCellDef> Date </th>
+                          <td mat-cell *matCellDef="let row"> {{row.event_date | date}} </td>
+                        </ng-container>
+                      
+                        <!-- Time Column -->
+                        <ng-container matColumnDef="time">
+                          <th mat-header-cell *matHeaderCellDef> Time </th>
+                          <td mat-cell *matCellDef="let row"> {{row.event_date | date:'shortTime'}} </td>
+                        </ng-container>
+                      
+                        <!-- Process Column -->
+                        <ng-container matColumnDef="event">
+                          <th mat-header-cell *matHeaderCellDef> Process </th>
+                          <td mat-cell *matCellDef="let row"> {{row.event}} </td>
+                        </ng-container>
+
+                         <!-- Location Column -->
+                         <ng-container matColumnDef="location">
+                            <th mat-header-cell *matHeaderCellDef> Location </th>
+                            <td mat-cell *matCellDef="let row"> {{row.location}} </td>
+                          </ng-container>
+    
+                        <!-- Delivery Date Column -->
+                        <ng-container matColumnDef="deliveryDate">
+                            <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+                            <td mat-cell *matCellDef="let row"> {{row.delivery_date | date}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
         </mat-card-content>
         </mat-card>
     </div>

@@ -38,7 +38,7 @@
         <button *ngIf="auth.isAuthenticated()" mat-button routerLink="/order-tracker">Track My Order</button>
         <button *ngIf="auth.isAuthenticated()" mat-button [matMenuTriggerFor]="menu">Account</button>
         <mat-menu #menu="matMenu">
-          <button routerLink="profile" mat-menu-item>Profile</button>
+          <button routerLink="/profile" mat-menu-item>Profile</button>
           <button mat-menu-item (click)="logout()">Logout</button>
         </mat-menu>
       </span>

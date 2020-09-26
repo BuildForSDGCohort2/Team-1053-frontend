@@ -20,22 +20,29 @@ export class ViewOrderComponent implements AfterViewInit, OnInit {
   @ViewChild(MatTable) table: MatTable<OrderedItem>;
   dataSource: OrderItemsDataSource;
   displayedColumns = ['id', 'item', 'price_per_item', 'quantity', 'cost'];
+  orderForm = this.fb.group({
+    order_id: [this.data.order_id],
+    status: [this.data.status],
+    order_items: [this.data.order_items],
+    payment_option: [this.data.payment_option]
+  });
+
 
   constructor(
     public dialogRef: MatDialogRef<ViewOrderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: OrderInterface,
     private orderService: OrderService,
-    formBuilder: FormBuilder
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void { 
     this.dataSource = new OrderItemsDataSource(
       this.data.order_items as OrderedItem[]);
-    console.log(this.dataSource)
   }
 
-  cancelOrder() {
-    this.data.status = 'Canceled';
+  updateOrder(data: object) {
+    const updates = data !== null ? data : this.orderForm.value;
+    this.data = { ...this.data, ...updates };
     this.orderService.updateOrder(this.data.id, this.data).subscribe(res => console.log(res)
     );
   }

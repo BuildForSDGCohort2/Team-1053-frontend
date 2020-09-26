@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { OrderListDataSource } from './order-list-datasource';
 import { OrderService } from 'src/app/services/order.service';
 import { OrderInterface } from 'src/app/models/app.model';
@@ -33,7 +33,6 @@ export class OrderListComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new OrderListDataSource(this.orderService);
-    console.log(this.dataSource)
   }
   updateData() {
     this.dataSource = new OrderListDataSource(this.orderService);
