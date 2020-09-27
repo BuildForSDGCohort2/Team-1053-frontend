@@ -27,9 +27,8 @@
       <mat-form-field class="full-width">
         <mat-label>Stock</mat-label>
         <mat-select formControlName="stock">
-          <mat-option value="primary">Primary</mat-option>
-          <mat-option value="accent">Accent</mat-option>
-          <mat-option value="warn">Warn</mat-option>
+          <mat-option value="0">Select</mat-option>
+          <mat-option *ngFor="let item of stock" value="{{item.id}}">{{item.category}}</mat-option>
         </mat-select>
         <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
           Product stock is <strong>required</strong>
@@ -65,14 +64,9 @@
     <div class="col">
       <mat-selection-list formControlName="tags">
         <h3 mat-subheader>Tags</h3>
-        <mat-list-option checkboxPosition="before" value="bananas">Bananas</mat-list-option>
-        <mat-list-option checkboxPosition="before" value="oranges">Oranges</mat-list-option>
-        <mat-list-option checkboxPosition="before" value="apples">Apples</mat-list-option>
-        <mat-list-option checkboxPosition="before" value="strawberries">Strawberries</mat-list-option>
+          <mat-list-option checkboxPosition="before"
+          *ngFor="let tag of tags" value="{{tag.id}}">{{tag.name}}</mat-list-option>
       </mat-selection-list>
-      <!-- <mat-error *ngIf="productForm.controls['tags'].hasError">
-        Product tag is <strong>required</strong>
-      </mat-error> -->
     </div>
   </div>
 </div>

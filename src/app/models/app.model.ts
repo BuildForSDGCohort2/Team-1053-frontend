@@ -26,8 +26,10 @@ export interface ProductInterface {
     price: number;
     stock: number;
     code: string;
+    description: string;
     date_created: Date;
     tags: string[];
+    image: string;
 }
 
 export interface StockInterface {

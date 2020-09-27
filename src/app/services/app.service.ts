@@ -71,20 +71,19 @@ export class AppService {
       return of(false);
     }));
   }
+  getFormData = object => Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData())
 
   updateUserProfile(data) {
-    console.log(data);
     const options = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Content-Disposition': `attachment; filename=${data.profile_pic}`,
-        'Access-Control-Allow-Headers': '*',
-        // tslint:disable-next-line: object-literal-key-quotes
-        'Authorization': `Token ${this.token}`
+        Authorization: `Token ${this.token}`
       })
     };
     return this.http.put(
-      `${baseUrl}customers/${this.currentUser.id}/`, data, options)
+      `${baseUrl}customers/${this.currentUser.id}/`, this.getFormData(data), options)
       .pipe(tap(res => {
         this.successMessage = 'Profile Successfully Updated';
       }))
@@ -121,7 +120,5 @@ export class AppService {
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
   }
-
-  getOrderSummary(){}
 
 }

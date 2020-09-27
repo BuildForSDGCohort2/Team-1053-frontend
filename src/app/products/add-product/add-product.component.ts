@@ -9,6 +9,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+  stock: any[];
+  tags: any[];
   productForm = this.fb.group({
     name: [null, Validators.required],
     description: [null, Validators.required],
@@ -26,19 +28,24 @@ export class AddProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.productService.getStock().subscribe(data => {
+      this.stock = data as any[];
+    });
+    this.productService.getTags().subscribe(data => {
+      this.tags = data as any[];
+    });
   }
 
   onSubmit() {
     if (this.productForm.invalid) {
-      console.log(this.productForm.value)
-      // this.productService.addProduct(this.productForm.value).subscribe(
-      //   res => {
-      //     this.notifier.showNotification(res as string, 'OK', 'success');
-      //   },
-      //   err => {
-      //     this.notifier.showNotification(err as string, 'OK', 'error');
-      //   }
-      // );
+      this.productService.addProduct(this.productForm.value).subscribe(
+        res => {
+          this.notifier.showNotification(res as string, 'OK', 'success');
+        },
+        err => {
+          this.notifier.showNotification(err as string, 'OK', 'error');
+        }
+      );
     }
   }
 

@@ -44,9 +44,6 @@ export class UserProfileComponent implements OnInit {
   }
   updateProfile() {
     if (this.addressForm.valid) {
-      this.addressForm.get('profile_pic').setValue(
-        this.addressForm.value.profile_pic.name
-       )
       console.log(this.addressForm.value)
       
       // this.imageData.append(

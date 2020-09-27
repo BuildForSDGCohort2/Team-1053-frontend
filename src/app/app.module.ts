@@ -28,12 +28,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { NotificationComponent } from './notification/notification.component';
+import { NotificationComponent } from './shared/notification/notification.component';
 import { AppService } from './services/app.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AuthGuard } from './users/auth.guard';
@@ -43,12 +45,16 @@ import { OrderTrackerComponent } from './orders/order-tracker/order-tracker.comp
 import { CreateOrderComponent } from './orders/create-order/create-order.component';
 import { OrderItemsComponent } from './orders/order-items/order-items.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
-import { DeleteDialogComponent } from './orders/delete-order/delete-dialog.component';
+import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
 import { ViewOrderComponent } from './orders/view-order/view-order.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { ProductsCardComponent } from './products/products-card/products-card.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { ComparisonChartComponent } from './charts/comparison-chart/comparison-chart.component';
 
 
 @NgModule({
@@ -73,7 +79,11 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
     ProductListComponent,
     AddProductComponent,
     ProductsCardComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    LineChartComponent,
+    BarChartComponent,
+    PieChartComponent,
+    ComparisonChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,11 +109,12 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
     MatSnackBarModule,
     MatChipsModule,
     MatDialogModule,
-    // MatMomentDateModule,
     FormsModule,
+    MatDatepickerModule,
     ReactiveFormsModule,
     LayoutModule,
     NgxMatFileInputModule,
+    ChartsModule,
   ],
   providers: [AppService, AuthGuard],
   bootstrap: [AppComponent]

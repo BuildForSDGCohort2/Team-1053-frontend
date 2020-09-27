@@ -43,6 +43,7 @@
                 <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button
                 color="accent">Edit</button>
                 <button *ngIf="auth.currentUser.is_staff" mat-button mat-flat-button
+                (click)="onDeleteProduct(product)"
                 color="warn">Delete</button>
             </mat-card-actions>
             </mat-card>

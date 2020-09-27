@@ -115,5 +115,7 @@ export class OrderService {
       return of(this.grandTotal);
     }
   }
-  orderSummary(){}
+  orderSummary() {
+    return this.http.get(`${baseUrl}order-summary`, this.options);
+  }
 }

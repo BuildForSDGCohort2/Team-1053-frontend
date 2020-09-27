@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ProductInterface } from 'src/app/models/app.model';
 import { AppService } from 'src/app/services/app.service';
 import { ProductService } from 'src/app/services/product.service';
+import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
@@ -72,7 +73,28 @@ export class ProductListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      console.log('closing');
+      this.productService.getProducts().subscribe(data => {
+        this.productsList = data as ProductInterface[];
+        this.pagedList = this.productsList.slice(0, 8);
+        this.length = this.productsList.length;
+      });
+    });
+  }
+  onDeleteProduct(product: ProductInterface) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '30rem',
+      data: product,
+      position: {
+        top: '10rem'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.productService.getProducts().subscribe(data => {
+        this.productsList = data as ProductInterface[];
+        this.pagedList = this.productsList.slice(0, 8);
+        this.length = this.productsList.length;
+      });
     });
   }
 
