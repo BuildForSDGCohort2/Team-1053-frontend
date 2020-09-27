@@ -1,10 +1,9 @@
 <div class="grid-container">
   <h1 class="mat-h1">Todays Deals</h1>
-  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
-    <mat-grid-tile *ngFor="let stockType of stock" [colspan]="( cardLayout | async )?.table.cols" [rowspan]="( cardLayout | async )?.table.rows">
-    <app-card title="{{stockType.category}}">
-      <app-products-table></app-products-table>
-    </app-card>
-    </mat-grid-tile>
+  <mat-grid-list cols="1" *ngFor="let stockType of stock">
+    <div class="mat-elevation-z2 product-category">
+      <h2 class="mat-h2">{{stockType.category}}</h2>
+      <app-products-card stock="{{stockType.id}}"></app-products-card>
+    </div>  
   </mat-grid-list>
 </div>

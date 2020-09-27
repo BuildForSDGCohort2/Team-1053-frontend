@@ -1,18 +1,41 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
   <mat-grid-list cols="{{( cardLayout | async )?.columns}}" rowHeight="200px">
+   
     <!--Summary Cards-->
    <mat-grid-tile *ngFor="let mc of summaryData" [colspan]="( cardLayout | async )?.miniCard.cols"
    [rowspan]="( cardLayout | async )?.miniCard.rows">
+   
       <app-summary-card [title]="mc.title" [value]="mc.value" [color]="mc.color" [percentValue]="mc.percentValue" [isIncrease]="mc.isIncrease" [isCurrency]="mc.isCurrency" [icon]="mc.icon">
       
       </app-summary-card>
     </mat-grid-tile>
     <!--Charts-->
-    <mat-grid-tile *ngFor="let i of ['On Hold', 'Cancelled', 'Approved', 'Delivered']" [colspan]="( cardLayout | async )?.chart.cols"
+    <mat-grid-tile [colspan]="( cardLayout | async )?.chart.cols"
       [rowspan]="( cardLayout | async )?.chart.rows">
-      <app-card title="{{i}} Orders"><div>No Items To Display</div></app-card>
+      <app-card title="Delivered Orders">
+        <app-line-chart></app-line-chart>
+      </app-card>
     </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.chart.cols"
+      [rowspan]="( cardLayout | async )?.chart.rows">
+      <app-card title="Cancelled Orders">
+        <app-pie-chart></app-pie-chart>
+      </app-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.chart.cols"
+      [rowspan]="( cardLayout | async )?.chart.rows">
+      <app-card title="Most Ordered Items">
+        <app-bar-chart></app-bar-chart>
+      </app-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.chart.cols"
+      [rowspan]="( cardLayout | async )?.chart.rows">
+      <app-card title="Orders Vs Stock">
+        <app-bar-chart></app-bar-chart>
+      </app-card>
+    </mat-grid-tile>
+    
     <!--Table-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.table.cols" [rowspan]="( cardLayout | async )?.table.rows">
       <app-card title="Latest Orders">

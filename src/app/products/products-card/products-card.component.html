@@ -1,0 +1,39 @@
+<div class="product-container">
+    <mat-grid-list cols="{{breakpoint}}" rowHeight="1:1" gutterSize="0" (window:resize)="onResize($event)">
+        <mat-grid-tile *ngFor="let product of pagedList">
+            <mat-card class="mat-elevation-z4 product-card">
+            <mat-card-header>
+                <mat-card-title>{{product.name}}</mat-card-title>
+            </mat-card-header>
+            <div class="image-box">
+                <img mat-card-image src="{{product.image}}" />
+            </div>
+            <mat-card-content class="product-card-content">
+                <mat-chip-list
+                class="price-chip"
+                cdkDropList 
+                cdkDropListOrientation="horizontal"
+                >
+                    <mat-chip
+                    class="product-price"
+                    cdkDrag
+                    >
+                        <strong>Price:</strong>
+                        &nbsp;&nbsp;{{product.price | currency}}
+                    </mat-chip>
+                </mat-chip-list>    
+            </mat-card-content>
+            <mat-card-actions class="product-actions">
+                <button mat-button mat-flat-button
+                color="primary" (click)="viewProduct(product)">Details</button>
+            </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+      
+    <mat-paginator [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="OnPageChange($event)">
+    </mat-paginator>
+</div>

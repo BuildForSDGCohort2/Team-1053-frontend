@@ -1,0 +1,13 @@
+.product-card {
+    max-width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.price {
+    color: grey;
+    font-size: 22px;
+}
+img {
+    width:auto;
+    max-height: 15rem;
+}

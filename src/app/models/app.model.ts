@@ -4,6 +4,7 @@ export interface User {
     firstName: string;
     lastName: string;
     key: string;
+    is_staff: boolean;
 }
 
 export interface Customer {
@@ -23,10 +24,12 @@ export interface ProductInterface {
     id: number;
     name: string;
     price: number;
-    stock: string;
+    stock: number;
     code: string;
+    description: string;
     date_created: Date;
     tags: string[];
+    image: string;
 }
 
 export interface StockInterface {
@@ -53,6 +56,7 @@ export interface OrderedItem {
     price_per_item: number;
     product: number;
     quantity: number;
+
 }
 
 export interface OrderInterface {
@@ -66,5 +70,6 @@ export interface OrderInterface {
     payment_option: string;
     first_name: string;
     last_name: string;
+    is_paid: boolean;
 }
 

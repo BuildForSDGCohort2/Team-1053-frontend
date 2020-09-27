@@ -9,6 +9,7 @@ import { LoginComponent } from './users/login/login.component';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AuthGuard } from './users/auth.guard';
+import { ProductListComponent } from './products/product-list/product-list.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'create-order', component: CreateOrderComponent, canActivate: [AuthGuard] },
   { path: 'order-tracker', component: OrderTrackerComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
+  { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'home' },
 ];
 

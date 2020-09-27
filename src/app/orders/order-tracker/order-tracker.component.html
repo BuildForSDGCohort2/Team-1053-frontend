@@ -67,8 +67,8 @@
     
                         <!-- Delivery Date Column -->
                         <ng-container matColumnDef="deliveryDate">
-                            <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
-                            <td mat-cell *matCellDef="let row"> {{row.delivery_date | date}} </td>
+                            <th mat-header-cell *matHeaderCellDef> Delivery Date & Time </th>
+                            <td mat-cell *matCellDef="let row"> {{row.delivery_date | date}} at {{row.delivery_date | date:'shortTime'}} </td>
                         </ng-container>
                       
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

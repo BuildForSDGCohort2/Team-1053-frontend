@@ -1,5 +1,6 @@
 <div class="grid-container">
   <h1 class="mat-h1">Orders</h1>
+
   <div class="mat-elevation-z8">
     <table mat-table class="full-width-table" matSort aria-label="Elements">
       <!-- Id Column -->
@@ -11,7 +12,7 @@
       <!-- Customer Column -->
       <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
-        <td mat-cell *matCellDef="let row">{{row.first_name}}</td>
+        <td mat-cell *matCellDef="let row">{{row.customer_name}}</td>
       </ng-container>
 
       <!-- Date Column -->
@@ -36,9 +37,8 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let row">
-          <button
+          <div
             class="order-status"
-            mat-raised-button
             [ngClass]="{ 
               'new': row.status==='New', 
               'on-hold': row.status==='On Hold',
@@ -48,7 +48,7 @@
               'delivered': row.status==='Delivered' 
             }" >
             {{row.status}}
-          </button>
+          </div>
         </td>
       </ng-container>
       

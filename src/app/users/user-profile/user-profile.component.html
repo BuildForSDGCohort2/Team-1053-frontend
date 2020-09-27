@@ -93,12 +93,8 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field>
-                    <ngx-mat-file-input accept="image/png, image/jpeg" formControlName="profile_pic" placeholder="Upload Profile picture">
-                      <mat-icon ngxMatFileInputIcon>file_upload</mat-icon>
-                      <mat-error *ngIf="addressForm.controls['profile_pic'].hasError">
-                        {{addressForm.controls['profile_pic'].hasError | json}}
-                        <!-- Postal Code is <strong>required</strong> -->
-                      </mat-error>
+                    <ngx-mat-file-input formControlName="profile_pic" [multiple]="multiple" [accept]="accept">
+                      <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
                     </ngx-mat-file-input>
                   </mat-form-field>
                 </div>

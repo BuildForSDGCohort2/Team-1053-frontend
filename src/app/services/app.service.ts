@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Customer, User } from 'src/app/models/app.model';
 import { baseUrl } from 'src/environments/environment';
 
@@ -19,6 +19,7 @@ export class AppService {
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      Accept: 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
       'Authorization': `Token ${this.token}`
     })
@@ -70,12 +71,19 @@ export class AppService {
       return of(false);
     }));
   }
+  getFormData = object => Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData())
 
   updateUserProfile(data) {
-    console.log(data)
-    this.options['Content-Type'] = 'undefined'
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: `Token ${this.token}`
+      })
+    };
     return this.http.put(
-      `${baseUrl}customers/${this.currentUser.id}/`, data, this.options)
+      `${baseUrl}customers/${this.currentUser.id}/`, this.getFormData(data), options)
       .pipe(tap(res => {
         this.successMessage = 'Profile Successfully Updated';
       }))
@@ -112,19 +120,5 @@ export class AppService {
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
   }
-
-  getStock() {
-    return this.http.get(`${baseUrl}stock/`)
-    .pipe(tap(data => {
-      if (data instanceof Array) {
-        return data;
-      }
-    }));
-  }
-  getProducts() {
-    return this.http.get(`${baseUrl}products/`);
-  }
-
-  getOrderSummary(){}
 
 }
