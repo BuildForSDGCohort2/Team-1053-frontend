@@ -1,8 +1,8 @@
 .grid-container {
   margin: 20px;
 }
-.gridList {
-  height: 100%;
+.profile{
+  width: 80%;
 }
 
 .full-width {
@@ -13,11 +13,6 @@
   min-width: 120px;
   margin: 20px auto;
   padding: 2rem;
-}
-
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
 }
 
 .row {
@@ -38,11 +33,14 @@
   justify-content: center;
   padding-top: 2rem;
 }
-img.profile-img {
-  max-width: 20%;
-  height: auto;
+.profile-img {
+  max-width: 160px;
+  max-height: 160px;
 }
 .circle {
-  border-radius: 50%;
+  border-radius: 50% !important;
 }
+/* .ngx-mat-file-input--default-icon {
+  display: none !important;
+} */
 

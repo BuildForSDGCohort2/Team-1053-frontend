@@ -8,8 +8,9 @@ import { OrderTrackerComponent } from './orders/order-tracker/order-tracker.comp
 import { LoginComponent } from './users/login/login.component';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { AuthGuard } from './users/auth.guard';
+import { AuthGuard } from './shared/auth-guard/auth.guard';
 import { ProductListComponent } from './products/product-list/product-list.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
 
 
 
@@ -20,8 +21,9 @@ const routes: Routes = [
   { path: 'register', component: SignUpComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
-  { path: 'create-order', component: CreateOrderComponent, canActivate: [AuthGuard] },
-  { path: 'order-tracker', component: OrderTrackerComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'new-order', component: CreateOrderComponent, canActivate: [AuthGuard] },
+  { path: 'track-order', component: OrderTrackerComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
   { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'home' },

@@ -1,13 +1,17 @@
 export interface User {
     id: number;
     username: string;
+    email: string;
     firstName: string;
     lastName: string;
     key: string;
     is_staff: boolean;
+    joined: Date;
+    lastLogin: Date;
 }
 
 export interface Customer {
+    user: User;
     username: string;
     first_name: string;
     last_name: string;
@@ -18,6 +22,7 @@ export interface Customer {
     profile_pic: string;
     postal_code: string;
     grandTotal: number;
+    id: number;
 }
 
 export interface ProductInterface {

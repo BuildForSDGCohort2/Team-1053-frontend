@@ -1,111 +1,114 @@
 <div class="grid-container">
   <h1 class="mat-h1">My Profile</h1>
-  <mat-grid-list cols="1" class="gridList"  rowHeight="50rem">
-    <mat-grid-tile [colspan]="1" [rowspan]="">
-      <div>
-        <form [formGroup]="addressForm" novalidate (ngSubmit)="updateProfile()">
-          <mat-card class="profile-card">
-            <mat-card-header class="header">
-              <mat-card-title>
-                <img mat-card-image class="profile-img" src="{{user.profile_pic}}" alt="{{user.first_name}}">
-                <div>
-                  {{user.first_name}} {{user.last_name}}
-                </div>
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="username" formControlName="username">
-                    <mat-error *ngIf="addressForm.controls['username'].hasError('required')">
-                      Name is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+  <div fxLayoutAlign="center center" fxFlexFill>
+      <form fxFlex="65" [formGroup]="addressForm" novalidate (ngSubmit)="updateProfile()">
+        <mat-card class="profile-card">
+          <mat-card-header class="header">
+            <mat-card-title>
+              <img mat-card-image class="profile-img circle" src="{{user.profile_pic}}" alt="{{user.first_name}}">
+              <div>
+                {{user.first_name}} {{user.last_name}}
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="First name" formControlName="first_name">
-                    <mat-error *ngIf="addressForm.controls['first_name'].hasError('required')">
-                      First name is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="Last name" formControlName="last_name">
-                    <mat-error *ngIf="addressForm.controls['last_name'].hasError('required')">
-                      Last name is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Username" formControlName="username">
+                  <mat-error *ngIf="addressForm.controls['username'].hasError('required')">
+                    Name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <textarea matInput placeholder="Address" formControlName="address"></textarea>
-                    <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
-                      Address is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Email Address" formControlName="email">
+                  <mat-error *ngIf="addressForm.controls['email'].hasError('required')">
+                    Email Address is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <textarea matInput placeholder="Phone Number" formControlName="phone"></textarea>
-                    <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
-                      Phone number is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="First name" formControlName="first_name">
+                  <mat-error *ngIf="addressForm.controls['first_name'].hasError('required')">
+                    First name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="City" formControlName="city">
-                    <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-                      City is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="Street" formControlName="street">
-                    <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
-                      Street is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Last name" formControlName="last_name">
+                  <mat-error *ngIf="addressForm.controls['last_name'].hasError('required')">
+                    Last name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <input matInput #postal_code maxlength="5" placeholder="Postal Code" type="number" formControlName="postal_code">
-                    <mat-error *ngIf="addressForm.controls['postal_code'].hasError('required')">
-                      Postal Code is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="City" formControlName="city">
+                  <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+                    City is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-              <div class="row">
-                <div class="col">
-                  <mat-form-field>
-                    <ngx-mat-file-input formControlName="profile_pic" [multiple]="multiple" [accept]="accept">
-                      <!-- <mat-icon ngxMatFileInputIcon>folder</mat-icon> -->
-                    </ngx-mat-file-input>
-                  </mat-form-field>
-                </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Street" formControlName="street">
+                  <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+                    Street is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
               </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary" type="submit">Update Profile</button>
-            </mat-card-actions>
-          </mat-card>
-        </form>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Address" formControlName="address">
+                  <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
+                    Address is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput #postal_code maxlength="5" placeholder="Postal Code" type="number" formControlName="postal_code">
+                  <mat-error *ngIf="addressForm.controls['postal_code'].hasError('required')">
+                    Postal Code is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Phone Number" formControlName="phone">
+                  <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
+                    Phone number is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <ngx-mat-file-input formControlName="profile_pic" placeholder="Profile Image">
+                  <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+                  </ngx-mat-file-input>
+                  <mat-error *ngIf="addressForm.get('profile_pic').hasError('required')">
+                    Please select a file
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">Update Profile</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+  </div>
 </div>

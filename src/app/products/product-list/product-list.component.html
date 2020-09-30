@@ -7,16 +7,26 @@
         color="primary"
         (click)="openAddProductDialog()"
         >
-        <mat-icon>add</mat-icon>&nbsp;Add Product
+            <mat-icon>add</mat-icon>&nbsp;Add Product
         </button>
-        <mat-grid-tile *ngFor="let product of pagedList">
+        <mat-toolbar class="search-container" [ngClass]="{'hasValue':hasValue}">
+            <mat-form-field class="mat-search_field" style="width: 100%" floatLabel='never'>
+                <input  
+                    matInput 
+                    placeholder="Search&hellip;"
+                    [(ngModel)]="term"
+                    (blur)="hasValue=term?true:false" 
+                    autocomplete="off" >
+                    <mat-icon *ngIf="hasValue" (click)="term=''" class="mat-18 
+                    ">close</mat-icon>
+            </mat-form-field>    
+        </mat-toolbar>
+        <mat-grid-tile *ngFor="let product of pagedList |filter:term">
             <mat-card class="mat-elevation-z4 product-card">
             <mat-card-header>
                 <mat-card-title>{{product.name}}</mat-card-title>
             </mat-card-header>
-            <div class="image-box">
-                <img mat-card-image src="{{product.image}}" />
-            </div>
+            <img mat-card-image src="{{product.image}}" />
             <mat-card-content class="product-card-content">
                 <mat-chip-list
                 class="price-chip"
