@@ -22,24 +22,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './shared/card/card.component';
 import { LoginComponent } from './users/login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NotificationComponent } from './shared/notification/notification.component';
 import { AppService } from './services/app.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { AuthGuard } from './users/auth.guard';
-import { SummaryCardComponent } from './summary-card/summary-card.component';
+import { AuthGuard } from './shared/auth-guard/auth.guard';
+import { SummaryCardComponent } from './shared/summary-card/summary-card.component';
 import { OrdersTableComponent } from './orders/orders-table/orders-table.component';
 import { OrderTrackerComponent } from './orders/order-tracker/order-tracker.component';
 import { CreateOrderComponent } from './orders/create-order/create-order.component';
@@ -51,10 +51,13 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { ProductsCardComponent } from './products/products-card/products-card.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
-import { LineChartComponent } from './charts/line-chart/line-chart.component';
-import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
-import { ComparisonChartComponent } from './charts/comparison-chart/comparison-chart.component';
+import { LineChartComponent } from './shared/charts/line-chart/line-chart.component';
+import { BarChartComponent } from './shared/charts/bar-chart/bar-chart.component';
+import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
+import { ComparisonChartComponent } from './shared/charts/comparison-chart/comparison-chart.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { CustomerDetailComponent } from './users/customer-detail/customer-detail.component';
+
 
 
 @NgModule({
@@ -84,6 +87,8 @@ import { ComparisonChartComponent } from './charts/comparison-chart/comparison-c
     BarChartComponent,
     PieChartComponent,
     ComparisonChartComponent,
+    UsersListComponent,
+    CustomerDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,11 +115,11 @@ import { ComparisonChartComponent } from './charts/comparison-chart/comparison-c
     MatChipsModule,
     MatDialogModule,
     FormsModule,
-    MatDatepickerModule,
     ReactiveFormsModule,
     LayoutModule,
     NgxMatFileInputModule,
     ChartsModule,
+    Ng2SearchPipeModule,
   ],
   providers: [AppService, AuthGuard],
   bootstrap: [AppComponent]

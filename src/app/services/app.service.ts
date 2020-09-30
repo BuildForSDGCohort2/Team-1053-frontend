@@ -19,9 +19,7 @@ export class AppService {
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Accept: 'application/json',
-      // tslint:disable-next-line: object-literal-key-quotes
-      'Authorization': `Token ${this.token}`
+      Authorization: `Token ${this.token}`
     })
   };
 
@@ -119,6 +117,12 @@ export class AppService {
     this.currentUser = undefined;
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
+  }
+  getCustomers() {
+    return this.http.get(`${baseUrl}customers/`, this.options);
+  }
+  deleteCustomer(id: number) {
+    return this.http.delete(`${baseUrl}customers/${id}`, this.options);
   }
 
 }

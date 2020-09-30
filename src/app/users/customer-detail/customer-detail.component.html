@@ -1,0 +1,35 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+    <div class="customer-card">
+        <header class="mat-elevation-z4">
+            <img mat-card-image src="{{customer.profile_pic}}" /><br>
+            <h1 class="mat-h1">
+                {{customer.first_name}} {{customer.last_name}}
+             </h1>
+        </header>
+        <main class="mat-elevation-z4 card-content">
+            
+            <p class="price">
+                Email Address: {{customer.user.email}}
+            </p>
+            <p>
+                Phone No.: {{customer.mobile}}
+            </p>
+            <p>
+                City: {{customer.city}}
+            </p>
+            <p>
+                Street: {{customer.street}}
+            </p>
+            <p>
+                Last Login: {{customer.user.lastLogin}}
+            </p>
+        </main>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+  <a mat-button color="ascent" cdkFocusInitial (click)="onClose()">
+      Close
+  </a>
+  <button mat-button type="submit" color="primary" mat-dialog-close (click)="onDelete()">Delete</button>
+</div>

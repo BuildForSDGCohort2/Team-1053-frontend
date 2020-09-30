@@ -11,27 +11,29 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
   productsList: ProductInterface[];
   pagedList: ProductInterface[] = [];
   breakpoint: number;
   length: number;
-  pageSize = 8;  // displaying eight cards each row
-  pageSizeOptions: number[] = [8, 12, 15, 18];
+  pageSize = 6;  // displaying eight cards each row
+  pageSizeOptions: number[] = [6, 12, 15, 18];
+  term: string;
+  hasValue: boolean;
 
-  constructor( 
+  constructor(
     private productService: ProductService,
     public auth: AppService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.breakpoint = (window.innerWidth <= 800) ? 1 : 4;
+    this.breakpoint = (window.innerWidth <= 800) ? 1 : 3;
     this.productService.getProducts().subscribe(data => {
       this.productsList = data as ProductInterface[];
-      this.pagedList = this.productsList.slice(0, 8);
+      this.pagedList = this.productsList.slice(0, 6);
       this.length = this.productsList.length;
     });
   }
@@ -45,20 +47,20 @@ export class ProductListComponent implements OnInit {
   }
 
   onResize(event) { // to adjust to screen size
-    this.breakpoint = (event.target.innerWidth <= 800) ? 1 : 4;
+    this.breakpoint = (event.target.innerWidth <= 800) ? 1 : 3;
   }
 
   openAddProductDialog() {
     const dialogRef = this.dialog.open(AddProductComponent, {
       width: '45rem',
       position: {
-        top: '10rem'
+        top: '1rem'
       }
     });
     dialogRef.afterClosed().subscribe(() => {
       this.productService.getProducts().subscribe(data => {
         this.productsList = data as ProductInterface[];
-        this.pagedList = this.productsList.slice(0, 8);
+        this.pagedList = this.productsList.slice(0, 6);
         this.length = this.productsList.length;
       });
     });
@@ -96,6 +98,19 @@ export class ProductListComponent implements OnInit {
         this.length = this.productsList.length;
       });
     });
+  }
+  backgroundStyle(url) {
+    return {
+      'background-repeat': 'no-repeat',
+      'background-position': 'center',
+      'background-size': 'cover',
+      'background-image': `url(${url})`
+    };
+ }
+
+  // Clear term types by user
+  clearFilter() {
+    this.term = '';
   }
 
 }

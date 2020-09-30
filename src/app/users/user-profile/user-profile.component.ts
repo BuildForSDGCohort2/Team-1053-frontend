@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { Customer } from 'src/app/models/app.model';
@@ -6,6 +6,7 @@ import { NotifierService } from 'src/app/services/notifications/notifier.service
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
@@ -14,9 +15,11 @@ export class UserProfileComponent implements OnInit {
   public user: Customer = this.appService.currentCustomer;
   multiple = false;
   accept: string;
+  readonly maxSize = 16;
 
   addressForm = this.fb.group({
     username: [this.user.username, Validators.required],
+    email: [this.user.user.email, Validators.required],
     first_name: [this.user.first_name, Validators.required],
     last_name: [this.user.last_name, Validators.required],
     address: [this.user.address, Validators.required],
@@ -31,7 +34,9 @@ export class UserProfileComponent implements OnInit {
         Validators.maxLength(5),
       ]),
     ],
-    profile_pic: [null, Validators.required]
+    profile_pic: [null,
+      [Validators.required, MaxSizeValidator(this.maxSize * 1024)]
+    ]
   });
 
   constructor(
@@ -44,17 +49,10 @@ export class UserProfileComponent implements OnInit {
   }
   updateProfile() {
     if (this.addressForm.valid) {
-      console.log(this.addressForm.value)
-      
-      // this.imageData.append(
-      //   'file', this.addressForm.value.profile_pic);
-      // console.log(this.imageData)
-      // this.addressForm.value.profile_pic = this.imageData;
       this.appService
       .updateUserProfile(this.addressForm.value)
       .subscribe((res) => {
         if (!res) {
-          console.log(this.appService.error)
           this.notifier.showNotification(this.appService.error, 'OK', 'error');
         } else {
           this.notifier.showNotification(
