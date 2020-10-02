@@ -1,50 +1,134 @@
 <div class="grid-container">
   <h1 class="mat-h1">My Profile</h1>
   <div fxLayoutAlign="center center" fxFlexFill>
-      <form fxFlex="65" [formGroup]="addressForm" novalidate (ngSubmit)="updateProfile()">
-        <mat-card class="profile-card">
-          <mat-card-header class="header">
-            <mat-card-title>
-              <img mat-card-image class="profile-img circle" src="{{user.profile_pic}}" alt="{{user.first_name}}">
-              <div>
-                {{user.first_name}} {{user.last_name}}
-              </div>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="Username" formControlName="username">
-                  <mat-error *ngIf="addressForm.controls['username'].hasError('required')">
-                    Name is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="Email Address" formControlName="email">
-                  <mat-error *ngIf="addressForm.controls['email'].hasError('required')">
-                    Email Address is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
-              </div>
+  <div fxFlex="65">
+    <mat-card class="profile-card">
+        <mat-card-header class="header">
+          <mat-card-title>
+            <img *ngIf="customer !== null" mat-card-image class="profile-img circle" src="{{customer.profile_pic}}" alt="{{user.username}}">
+            <div>
+              {{user.first_name}} {{user.last_name}}
             </div>
-            <div class="row">
-              <div class="col">
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="First name" formControlName="first_name">
-                  <mat-error *ngIf="addressForm.controls['first_name'].hasError('required')">
-                    First name is <strong>required</strong>
-                  </mat-error>
-                </mat-form-field>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <!-- Change Password -->
+        <div>
+          <form [formGroup]="passwordForm" novalidate (ngSubmit)="updateBasicInfo()">
+          <div class="row">
+            <div class="col">
+              <button
+              mat-raised-button color="primary"
+              *ngIf="!displayPasswordField"
+              (click)="displayPasswordField=!displayPasswordField">
+                Change Password
+              </button>
+              <mat-form-field *ngIf="displayPasswordField" class="full-width">
+                <input matInput type="password" placeholder="New Password" formControlName="new_password1">
+                <mat-error *ngIf="passwordForm.controls['new_password1'].hasError('required')">
+                  New Password is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="passwordForm.controls['new_password1'].hasError('minlength')">
+                  New Password is <strong>too short</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-error *ngIf="passwordForm.controls['new_password1'].hasError('pattern')">
+                At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
+              </mat-error>
+            </div>
+            <div class="col">
+              <mat-form-field *ngIf="displayPasswordField" class="full-width">
+                <input matInput type="password" placeholder="Confirm Password" formControlName="new_password2">
+                <mat-error *ngIf="passwordForm.controls['new_password2'].hasError('required')">
+                  Password must <strong>match</strong>
+                </mat-error>
+                <mat-error *ngIf="passwordForm.controls['new_password2'].hasError('minlength')">
+                  New Password is <strong>too short</strong>
+                </mat-error>
+                <mat-error *ngIf="passwordForm.controls['new_password2'].hasError('pattern')">
+                  At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
+                </mat-error>
+                
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col" *ngIf="displayPasswordField">
+              <mat-form-field *ngIf="displayPasswordField" class="full-width">
+                <input matInput type="password" placeholder="Old Password" formControlName="old_password">
+                <mat-error *ngIf="passwordForm.controls['old_password'].hasError('required')">
+                  Old password is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col" *ngIf="displayPasswordField">
+              <button mat-raised-button color="primary"
+              (click)="changePassword()">Submit</button>
+              <button mat-raised-button color="primary"
+              [style]="{'margin-left': '1rem'}"
+              *ngIf="displayPasswordField"
+              (click)="displayPasswordField=!displayPasswordField">
+              Cancel
+              </button>
+            </div>
+          </div>
+          </form>
+        </div>
+        <hr>
+        <!-- Basic Information -->
+        <div>
+          <h2>Basic Information</h2>
+              <form [formGroup]="infoForm" novalidate (ngSubmit)="updateBasicInfo()">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Username" formControlName="username">
+                    <mat-error *ngIf="infoForm.controls['username'].hasError('required')">
+                      Name is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Email Address" formControlName="email">
+                    <mat-error *ngIf="infoForm.controls['email'].hasError('required')">
+                      Email Address is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
               </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="First name" formControlName="first_name">
+                    <mat-error *ngIf="infoForm.controls['first_name'].hasError('required')">
+                      First name is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Last name" formControlName="last_name">
+                    <mat-error *ngIf="infoForm.controls['last_name'].hasError('required')">
+                      Last name is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Update Basic Info</button>
+              </mat-card-actions>
+          </form>
+        </div>
+        <hr>
+        <!-- Contact Information -->
+        <div>
+          <h2>Contact Information</h2>
+          <form [formGroup]="contactForm" novalidate (ngSubmit)="updateContactInfo()">
+            <div class="row hidden">
               <div class="col">
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="Last name" formControlName="last_name">
-                  <mat-error *ngIf="addressForm.controls['last_name'].hasError('required')">
-                    Last name is <strong>required</strong>
-                  </mat-error>
+                  <input matInput placeholder="user" formControlName="user">
                 </mat-form-field>
               </div>
             </div>
@@ -52,7 +136,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <input matInput placeholder="City" formControlName="city">
-                  <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+                  <mat-error *ngIf="contactForm.controls['city'].hasError('required')">
                     City is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
@@ -60,7 +144,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <input matInput placeholder="Street" formControlName="street">
-                  <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+                  <mat-error *ngIf="contactForm.controls['street'].hasError('required')">
                     Street is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
@@ -70,7 +154,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <input matInput placeholder="Address" formControlName="address">
-                  <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
+                  <mat-error *ngIf="contactForm.controls['address'].hasError('required')">
                     Address is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
@@ -78,7 +162,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <input matInput #postal_code maxlength="5" placeholder="Postal Code" type="number" formControlName="postal_code">
-                  <mat-error *ngIf="addressForm.controls['postal_code'].hasError('required')">
+                  <mat-error *ngIf="contactForm.controls['postal_code'].hasError('required')">
                     Postal Code is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
@@ -88,7 +172,7 @@
               <div class="col">
                 <mat-form-field class="full-width">
                   <input matInput placeholder="Phone Number" formControlName="phone">
-                  <mat-error *ngIf="addressForm.controls['phone'].hasError('required')">
+                  <mat-error *ngIf="contactForm.controls['phone'].hasError('required')">
                     Phone number is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
@@ -98,17 +182,19 @@
                   <ngx-mat-file-input formControlName="profile_pic" placeholder="Profile Image">
                   <mat-icon ngxMatFileInputIcon>folder</mat-icon>
                   </ngx-mat-file-input>
-                  <mat-error *ngIf="addressForm.get('profile_pic').hasError('required')">
+                  <mat-error *ngIf="contactForm.get('profile_pic').hasError('required')">
                     Please select a file
                   </mat-error>
                 </mat-form-field>
               </div>
             </div>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">Update Profile</button>
-          </mat-card-actions>
-        </mat-card>
-      </form>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" type="submit">Update Contact Info</button>
+            </mat-card-actions>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
   </div>
 </div>

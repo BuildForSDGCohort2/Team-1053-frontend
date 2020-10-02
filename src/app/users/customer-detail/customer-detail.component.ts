@@ -20,6 +20,6 @@ export class CustomerDetailComponent implements OnInit {
   onClose(): void {
     this.dialogRef.close();
   }
-  onDelete(){}
+  onDelete(customer){}
 
 }

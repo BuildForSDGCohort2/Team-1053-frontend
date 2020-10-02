@@ -40,7 +40,7 @@
 .circle {
   border-radius: 50% !important;
 }
-/* .ngx-mat-file-input--default-icon {
-  display: none !important;
-} */
+.hidden{
+  display: none;
+}
 

@@ -46,9 +46,9 @@ export class UsersListDataSource extends DataSource<Customer> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.first_name, b.first_name, isAsc);
+        case 'name': return compare(a.user.first_name, b.user.first_name, isAsc);
         case 'joined': return compare(+a.user.joined, +b.user.joined, isAsc);
-        case 'lastLogin': return compare(+a.user.lastLogin, +b.user.lastLogin, isAsc);
+        case 'lastLogin': return compare(+a.user.last_login, +b.user.last_login, isAsc);
         default: return 0;
       }
     });

@@ -69,31 +69,50 @@ export class AppService {
       return of(false);
     }));
   }
+  changeUserPassword(data) {
+    return this.http.post(`${baseUrl}user/password/change/`, data, this.options);
+  }
+
+  updateUser(data) {
+    return this.http.put(
+      `${baseUrl}user/user/`, data, this.options
+    );
+  }
+
   getFormData = object => Object.keys(object).reduce((formData, key) => {
     formData.append(key, object[key]);
     return formData;
   }, new FormData())
 
-  updateUserProfile(data) {
+  updateContactInfo(data) {
     const options = {
       headers: new HttpHeaders({
         Authorization: `Token ${this.token}`
       })
     };
-    return this.http.put(
-      `${baseUrl}customers/${this.currentUser.id}/`, this.getFormData(data), options)
-      .pipe(tap(res => {
-        this.successMessage = 'Profile Successfully Updated';
-      }))
-      .pipe(catchError(err => {
-        if (err.error instanceof Object) {
-          const errorKey = Object.keys(data).filter(er => er === Object.keys(err.error)[0])[0];
-          this.error = err.error[errorKey];
-        }else{
-          this.error = 'Server Connection Error';
-        }
-        return of(false);
-      }));
+    if (this.currentCustomer !== null) {
+      return this.http.put(
+        `${baseUrl}customers/${this.currentCustomer.id}/`,
+        this.getFormData(data), options
+      )
+        .pipe(tap(res => {
+          this.successMessage = 'Profile Successfully Updated';
+        }))
+        .pipe(catchError(err => {
+          if (err.error instanceof Object) {
+            const errorKey = Object.keys(data).filter(er => er === Object.keys(err.error)[0])[0];
+            this.error = err.error[errorKey];
+          }else{
+            this.error = 'Server Connection Error';
+          }
+          return of(false);
+        }));
+    } else {
+      return this.http.post(
+        `${baseUrl}customers/`,
+        this.getFormData(data), options
+      );
+    }
   }
 
   getCustomerProfile() {
@@ -115,6 +134,7 @@ export class AppService {
 
   logout() {
     this.currentUser = undefined;
+    this.currentCustomer = null;
     localStorage.clear();
     return this.http.post(`${baseUrl}user/logout/`, {});
   }

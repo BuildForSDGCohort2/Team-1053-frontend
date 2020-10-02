@@ -11,7 +11,6 @@
       <a *ngIf="auth.isAuthenticated()" mat-list-item routerLink="/track-order">Track Order</a>
       <a mat-list-item routerLink="/products">Products</a>
       <a *ngIf="auth.isAuthenticated()" mat-list-item routerLink="/orders">Orders</a>
-      <a *ngIf="auth.isAuthenticated()" mat-list-item routerLink="/sales">Sales</a>
       <a *ngIf="auth.isAuthenticated()" mat-list-item routerLink="/users">Users</a>
       <a mat-list-item >Search</a>
       <a *ngIf="auth.isAuthenticated()" mat-list-item
@@ -45,6 +44,8 @@
       </span>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <router-outlet></router-outlet>
+    <router-outlet>
+      <ng-content></ng-content>
+    </router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
