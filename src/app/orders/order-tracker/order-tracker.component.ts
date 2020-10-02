@@ -32,7 +32,6 @@ export class OrderTrackerComponent implements  OnInit {
       this.historyData = res as HistoryElement[];
       this.customerDetails = this.historyData[0].ship_to;
       this.dataSource = new OrderHistoryDataSource(this.historyData);
-      console.log(this.customerDetails)
     });
   }
 

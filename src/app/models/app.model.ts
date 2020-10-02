@@ -2,19 +2,16 @@ export interface User {
     id: number;
     username: string;
     email: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     key: string;
     is_staff: boolean;
     joined: Date;
-    lastLogin: Date;
+    last_login: Date;
 }
 
 export interface Customer {
     user: User;
-    username: string;
-    first_name: string;
-    last_name: string;
     address: string;
     mobile: string;
     city: string;

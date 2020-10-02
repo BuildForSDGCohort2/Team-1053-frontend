@@ -20,11 +20,14 @@
     </ng-container>
 
     <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
+    <ng-container matColumnDef="isAdmin">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Phone Number
+        Is Admin
       </th>
-      <td mat-cell *matCellDef="let row">{{row.mobile}}</td>
+      <td mat-cell *matCellDef="let row">
+        <div *ngIf="row.user.is_staff">Yes</div>
+        <div *ngIf="!row.user.is_staff">No</div>
+      </td>
     </ng-container>
 
     <!-- Joined Column -->
@@ -33,14 +36,6 @@
         Date Joined
       </th>
       <td mat-cell *matCellDef="let row">{{row.user.date_joined | date: 'short'}}</td>
-    </ng-container>
-
-    <!-- Last Login Column -->
-    <ng-container matColumnDef="lastLogin">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Last Login
-      </th>
-      <td mat-cell *matCellDef="let row">{{row.user.last_login | date: 'short'}}</td>
     </ng-container>
 
     <!-- Options Column -->

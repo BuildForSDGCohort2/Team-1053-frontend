@@ -24,8 +24,8 @@ export class CreateOrderComponent implements OnInit {
   grandTotal;
 
   addressForm = this.fb.group({
-    first_name: [this.user.first_name, Validators.required],
-    last_name: [this.user.last_name, Validators.required],
+    first_name: [this.user.user.first_name, Validators.required],
+    last_name: [this.user.user.last_name, Validators.required],
     address: [this.user.address, Validators.required],
     mobile: [this.user.mobile, Validators.required],
     city: [this.user.city, Validators.required],

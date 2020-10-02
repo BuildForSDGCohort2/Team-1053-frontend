@@ -21,7 +21,7 @@ export class UsersListComponent implements AfterViewInit, OnInit {
   dataSource: UsersListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'email', 'phone', 'joined', 'lastLogin', 'options'];
+  displayedColumns = ['name', 'email', 'isAdmin', 'joined', 'options'];
 
   constructor(
     public appService: AppService,
@@ -30,6 +30,7 @@ export class UsersListComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new UsersListDataSource(this.appService);
+    console.log(this.dataSource)
   }
 
   onViewCustomer(customer: Customer) {

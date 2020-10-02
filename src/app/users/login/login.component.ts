@@ -36,10 +36,13 @@ export class LoginComponent implements OnInit {
             this.authService.error[0], 'OK', 'error'
           );
         } else {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['profile']);
         }
       });
     }
+  }
+  displayForm() {
+    
   }
   cancel() {
     this.router.navigate(['']);
