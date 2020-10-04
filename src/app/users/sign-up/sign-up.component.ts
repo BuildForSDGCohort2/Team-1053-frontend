@@ -25,7 +25,6 @@ export class SignUpComponent {
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(15),
-        Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/')
       ]),
     ],
     password2: [

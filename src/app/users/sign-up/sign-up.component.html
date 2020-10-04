@@ -59,9 +59,6 @@
               <mat-error *ngIf="signUpForm.controls['password1'].hasError('minlength')">
                 Password is <strong>too short</strong>
               </mat-error>
-            <mat-error *ngIf="signUpForm.controls['password1'].hasError('pattern')">
-              At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
-            </mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -78,9 +75,6 @@
               <mat-error *ngIf="signUpForm.controls['password2'].hasError('minlength')">
                 Password is <strong>too short</strong>
               </mat-error>
-            <mat-error *ngIf="signUpForm.controls['password2'].hasError('pattern')">
-              At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
-            </mat-error>
             </mat-form-field>
           </div>
         </div>
