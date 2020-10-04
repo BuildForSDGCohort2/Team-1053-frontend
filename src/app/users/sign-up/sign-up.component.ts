@@ -24,7 +24,7 @@ export class SignUpComponent {
       Validators.compose([
         Validators.required,
         Validators.minLength(6),
-        Validators.maxLength(15),
+        Validators.maxLength(15)
       ]),
     ],
     password2: [
@@ -32,8 +32,7 @@ export class SignUpComponent {
       Validators.compose([
         Validators.required,
         Validators.minLength(6),
-        Validators.maxLength(15),
-        Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/')
+        Validators.maxLength(15)
       ]),
     ]
   });
