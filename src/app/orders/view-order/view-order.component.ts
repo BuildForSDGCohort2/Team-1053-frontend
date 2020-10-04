@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -23,7 +23,7 @@ export class ViewOrderComponent implements AfterViewInit, OnInit {
   orderForm = this.fb.group({
     order_id: [this.data.order_id],
     status: [this.data.status],
-    order_items: [this.data.order_items],
+    order_items: [this.data.orderitem_set],
     payment_option: [this.data.payment_option]
   });
 
@@ -37,7 +37,7 @@ export class ViewOrderComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.dataSource = new OrderItemsDataSource(
-      this.data.order_items as OrderedItem[]);
+      this.data.orderitem_set as OrderedItem[]);
   }
 
   updateOrder(data: object) {

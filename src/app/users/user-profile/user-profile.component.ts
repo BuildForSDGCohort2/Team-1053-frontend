@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Customer, User } from 'src/app/models/app.model';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
+import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
 import { AppService } from 'src/app/services/user/app.service';
 
 @Component({
@@ -13,11 +15,12 @@ import { AppService } from 'src/app/services/user/app.service';
 })
 export class UserProfileComponent implements OnInit {
   public user: User = this.appService.currentUser;
-  public customer: Customer = this.appService.currentCustomer;
+  public customer: Customer;
   multiple = false;
   displayPasswordField = false;
   accept: string;
   readonly maxSize = 16;
+  contactForm: FormGroup;
 
   // Password form
   passwordForm = this.fb.group({
@@ -48,45 +51,53 @@ export class UserProfileComponent implements OnInit {
     last_name: [this.user.last_name, Validators.required],
   });
 
-  // Contact form
-  contactForm = this.fb.group({
-    user: this.user.id,
-    address: [
-      this.customer ? this.customer.address : '',
-      Validators.required
-    ],
-    phone: [
-      this.customer ? this.customer.mobile : '',
-      Validators.required
-    ],
-    city: [
-      this.customer ? this.customer.city : '',
-      Validators.required
-    ],
-    street: [
-      this.customer ? this.customer.street : '',
-      Validators.required
-    ],
-    postal_code: [
-      '',
-      Validators.compose([
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(5),
-      ]),
-    ],
-    profile_pic: [null,
-      [Validators.required, MaxSizeValidator(this.maxSize * 1024)]
-    ]
-  });
-
   constructor(
     private fb: FormBuilder,
     public appService: AppService,
-    private notifier: NotifierService
+    private notifier: NotifierService,
+    private storageService: LocalStorageService,
+    private router: Router
   ) {}
   ngOnInit() {
-    this.appService.getCustomerProfile().subscribe();
+    // Contact form
+    this.contactForm = this.fb.group({
+      user: this.user.id,
+      address: [
+        this.customer ? this.customer.address : '',
+        Validators.required
+      ],
+      phone: [
+        this.customer ? this.customer.mobile : '',
+        Validators.required
+      ],
+      city: [
+        this.customer ? this.customer.city : '',
+        Validators.required
+      ],
+      street: [
+        this.customer ? this.customer.street : '',
+        Validators.required
+      ],
+      postal_code: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(5),
+        ]),
+      ],
+      profile_pic: [null,
+        [Validators.required, MaxSizeValidator(this.maxSize * 1024)]
+      ]
+    });
+    this.appService.getCustomerProfile().subscribe(
+      res => this.storageService.setItem(
+        'currentCustomer', JSON.stringify(res)
+      )
+    );
+    this.storageService.getItem('currentCustomer').subscribe(
+      customer => this.customer = JSON.parse(customer)
+    );
   }
   // update basic info
   updateBasicInfo() {
@@ -98,7 +109,7 @@ export class UserProfileComponent implements OnInit {
           this.notifier.showNotification(this.appService.error, 'OK', 'error');
         } else {
           this.notifier.showNotification(
-            this.appService.successMessage,
+            'Basic Information Updated. Update Contact Information',
             'OK',
             'success'
           );
@@ -120,10 +131,26 @@ export class UserProfileComponent implements OnInit {
 
   // update contact info
   updateContactInfo() {
-    console.log(this.contactForm.value)
     this.appService.updateContactInfo(this.contactForm.value).subscribe(
-      res => { },
-      err => { }
+      (res) => {
+        this.storageService.setItem('currentCustomer', JSON.stringify(res));
+        this.notifier.showNotification(
+          'Contact Information Updated Successfully',
+          'OK',
+          'success'
+        );
+        this.router.navigate(['new-order']);
+      },
+      (err) => {
+        this.notifier.showNotification(
+          'The was error, Please check your connection settings',
+          'OK',
+          'error'
+        );
+      }
+    );
+    this.storageService.getItem('currentCustomer').subscribe(
+      customer => this.customer = JSON.parse(customer)
     );
   }
 }

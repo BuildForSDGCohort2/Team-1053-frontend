@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, HostBinding, Inject, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { auth } from 'firebase';
 import { AppService } from './services/user/app.service';
 
 @Component({
@@ -37,13 +36,5 @@ export class AppComponent implements OnInit {
     this.snackBar.open('Your profile Is Incomplete', 'Please update Your Profile');
   }
 
-  ngOnInit() {
-    this.auth.checkAuthenticationStatus();
-    this.auth.getCustomerProfile().subscribe();
-    this.customer = this.auth.currentCustomer;
-    if (this.auth.currentUser !== null && this.customer == null) {
-      this.showSnackbarAction();
-    }
-
-  }
+  ngOnInit() {}
 }

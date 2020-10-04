@@ -61,6 +61,30 @@
                     </td>
                     </tr>
                     <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>
+                                Select your Payment Option (required)
+                            </mat-label>
+                              <mat-select
+                                matNativeControl required 
+                                formControlName="payment_option" required
+                              >
+                              <mat-option>--select one--</mat-option>
+                                <mat-option
+                                 *ngFor="let option of options"
+                                 [value]="option"
+                                >
+                                    {{option}}
+                                </mat-option>
+                              </mat-select>
+                            <mat-error *ngIf="addressForm.controls['payment_option'].hasError('required')">
+                            Payment Option is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </td>
+                    </tr>
+                    <tr>
                 </table>
                 <hr>
                   <!-- order items table-->
@@ -108,7 +132,8 @@
                     <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky:true"></tr>
                   </table>
                   <hr>
-                <button mat-raised-button color="primary" type="submit">Place Order</button>
+                <button mat-raised-button color="primary"
+                [disabled]="orderItems.length < 1 || !addressForm.valid"type="submit">Place Order</button>
             </form>
         </mat-card-content>
         </mat-card>

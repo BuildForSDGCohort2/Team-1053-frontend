@@ -25,23 +25,21 @@ export class CreateOrderComponent implements OnInit {
   product: ProductInterface;
   grandTotal;
   fields = ['first_name', 'last_name', 'address', 'mobile', 'city', 'street', 'postalCode'];
+  options = [
+    'Cash On Delivery',
+    'Paypal',
+    'Credit Card'
+  ];
 
   addressForm = this.fb.group({
-    first_name: [this.user.user.first_name, Validators.required],
-    last_name: [this.user.user.last_name, Validators.required],
-    address: [this.user.address, Validators.required],
-    mobile: [this.user.mobile, Validators.required],
-    city: [this.user.city, Validators.required],
-    street: [this.user.street, Validators.required],
-    postalCode: [
-      this.user.postal_code,
-      Validators.compose([
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(5),
-      ]),
-    ],
-    payment_option: ['Cash On Delivery', Validators.required],
+    first_name: [this.user.user.first_name],
+    last_name: [this.user.user.last_name],
+    address: [this.user.address],
+    mobile: [this.user.mobile],
+    city: [this.user.city],
+    street: [this.user.street],
+    postalCode: [this.user.postal_code],
+    payment_option: ['', Validators.required],
   });
   constructor(
     private fb: FormBuilder,
@@ -67,40 +65,42 @@ export class CreateOrderComponent implements OnInit {
     this.storageService.getItem('totalCost').subscribe(item => {
       this.grandTotal = JSON.parse(item) as number;
     });
+    // disable some form fields
+    this.fields.forEach(field => this.addressForm.controls[field].disable());
   }
 
   onDeleteOrderItem(itemId: number) {
-    this.orderItems.some(item => {
-      if (item.id === itemId) {
-        const index = this.orderItems.indexOf(item);
-        if (index) {
-          this.orderItems.splice(index, 1);
-          this.storageService.setItem(
-            'orderItems', JSON.stringify(this.orderItems)
-          );
-        }
-        this.notifierService.showNotification(
+    const items = [];
+    this.orderItems.map(item => {
+      if (item.id !== itemId) {
+        console.log('item', item);
+        items.push(item);
+      }
+    });
+    this.storageService.setItem('orderItems', JSON.stringify(items));
+    const totalCost = this.updateGrandTotal(items);
+    this.storageService.setItem('totalCost', JSON.stringify(totalCost));
+    this.storageService.getItem('orderItems').subscribe(
+      orderItem => { this.orderItems = JSON.parse(orderItem) as []; });
+    this.storageService.getItem('totalCost').subscribe(
+      cost => {this.grandTotal = JSON.parse(cost) as number;
+      });
+    this.notifierService.showNotification(
         'Item Successfully deleted',
         'OK', 'success'
         );
-      }
-      this.storageService.getItem('orderItems').subscribe(orderItem => {
-        this.orderItems = JSON.parse(orderItem) as [];
-      });
-      const totalCost = this.updateGrandTotal(this.orderItems);
-      this.storageService.setItem('totalCost', JSON.stringify(totalCost));
-    });
   }
 
   onSubmit() {
-    let data: any;
-    this.fields.map(field => this.addressForm.removeControl(field));
-    data = this.addressForm.value;
-    data.order_item = this.orderItems;
-    console.log(data);
-    if (data.order_item.length === 0) {
+    if (this.orderItems.length === 0) {
       this.notifierService.showNotification('Please add items to your order!', 'OK', 'error');
     } else {
+      const items = this.orderItems;
+      items.map(item => this.deleteField(item));
+      const data = {
+        items: this.orderItems,
+        payment_option: this.addressForm.value.payment_option
+      };
       console.log(data);
       this.orderService.saveOrder(data).subscribe(
         () => {
@@ -133,7 +133,15 @@ export class CreateOrderComponent implements OnInit {
       });
     });
   }
-  updateGrandTotal(items) {
+  deleteField(object: OrderItem) {
+    const fields = ['product_name', 'price', 'price_per_item'];
+    fields.map(field => delete object[field]);
+    object.product = object.id;
+    delete object.id;
+    return object;
+  }
+
+  updateGrandTotal(items: Array<OrderItem>) {
     let totalCost = 0;
     items.forEach(item => {
       totalCost += item.cost;

@@ -69,7 +69,7 @@ export interface OrderInterface {
     order_id: string;
     grand_total: number;
     date_created: string;
-    order_items: OrderedItem[];
+    orderitem_set: OrderedItem[];
     payment_option: string;
     first_name: string;
     last_name: string;

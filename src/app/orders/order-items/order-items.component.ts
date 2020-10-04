@@ -37,8 +37,8 @@ export class OrderItemsComponent implements OnInit {
       };
     } else {
       this.formData = {
-        product: this.data.orderItem.product,
-        product_name: this.data.orderItem.product_name,
+        product: this.data.id,
+        product_name: '',
         price: this.data.orderItem.price_per_item,
         quantity: this.data.orderItem.quantity,
         cost: this.data.orderItem.cost
@@ -85,7 +85,9 @@ export class OrderItemsComponent implements OnInit {
         const foundIndex = this.orderItems.findIndex(
           item => item.id === form.value.product_id
         );
-        this.orderItems[foundIndex + 1] = form.value;
+        this.data.orderItem.quantity = form.value.quantity;
+        this.data.orderItem.cost = form.value.cost;
+        this.orderItems[foundIndex + 1] = this.data.orderItem;
       }
       const totalCost = this.data.updateGrandTotal(this.orderItems);
       this.storageService.setItem('totalCost', JSON.stringify(totalCost));
