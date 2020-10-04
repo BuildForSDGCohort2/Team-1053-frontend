@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { Customer } from 'src/app/models/app.model';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/user/app.service';
 import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
 import { CustomerDetailComponent } from '../customer-detail/customer-detail.component';
 import { UsersListDataSource } from './users-list-datasource';

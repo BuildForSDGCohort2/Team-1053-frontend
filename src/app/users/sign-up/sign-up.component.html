@@ -20,6 +20,9 @@
               <mat-error *ngIf="signUpForm.controls['email'].hasError('required')">
                 Email address is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="signUpForm.controls['email'].hasError('email')">
+                Email address is <strong>not valid</strong>
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -50,6 +53,12 @@
               <mat-error *ngIf="signUpForm.controls['password1'].hasError('required')">
                 Password is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="signUpForm.controls['new_password1'].hasError('minlength')">
+                Password is <strong>too short</strong>
+              </mat-error>
+            <mat-error *ngIf="signUpForm.controls['new_password1'].hasError('pattern')">
+              At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
+            </mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -60,6 +69,12 @@
               <mat-error *ngIf="signUpForm.controls['password2'].hasError('required')">
                 Password <strong>must match</strong>
               </mat-error>
+              <mat-error *ngIf="signUpForm.controls['new_password1'].hasError('minlength')">
+                Password is <strong>too short</strong>
+              </mat-error>
+            <mat-error *ngIf="signUpForm.controls['new_password1'].hasError('pattern')">
+              At least <strong>one numeric digit</strong>, <strong>one uppercase</strong> and <strong>lowercase letter</strong> is required.
+            </mat-error>
             </mat-form-field>
           </div>
         </div>

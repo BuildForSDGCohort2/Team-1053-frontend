@@ -44,7 +44,8 @@ export interface StockInterface {
 export interface OrderItem {
     id: number;
     cost: number;
-    product: string;
+    product: number;
+    product_name: string;
     price_per_item: number;
     quantity: number;
 

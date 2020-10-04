@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/user/app.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,10 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
-    email: [null, Validators.required],
+    email: [null, Validators.compose([
+      Validators.required,
+      Validators.email
+    ])],
     password: [null, Validators.required],
   });
 
@@ -42,7 +45,7 @@ export class LoginComponent implements OnInit {
     }
   }
   displayForm() {
-    
+
   }
   cancel() {
     this.router.navigate(['']);

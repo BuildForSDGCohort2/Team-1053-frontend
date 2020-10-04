@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { Customer, User } from 'src/app/models/app.model';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/user/app.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,

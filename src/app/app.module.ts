@@ -36,7 +36,7 @@ import { SignUpComponent } from './users/sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NotificationComponent } from './shared/notification/notification.component';
-import { AppService } from './services/app.service';
+import { AppService } from './services/user/app.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AuthGuard } from './shared/auth-guard/auth.guard';
 import { SummaryCardComponent } from './shared/summary-card/summary-card.component';

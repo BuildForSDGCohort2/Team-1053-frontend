@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { OrderService } from 'src/app/services/order.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OrderItem, ProductInterface } from 'src/app/models/app.model';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
+import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -14,35 +14,39 @@ import { NotifierService } from 'src/app/services/notifications/notifier.service
 export class OrderItemsComponent implements OnInit {
   formData: any;
   isValid = true;
-  orderItem: OrderItem;
+  productName: string;
+  orderItem: OrderItem ;
+  orderItems: OrderItem[];
+  selectedProduct: ProductInterface;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<OrderItemsComponent>,
-    private orderService: OrderService,
+    private storageService: LocalStorageService,
     private notifierService: NotifierService
   ) { }
 
   ngOnInit() {
     if (this.data.orderItemIndex === null) {
       this.formData = {
-        id: this.data.id,
-        name: '',
+        product: this.data.id,
+        product_name: this.productName,
         price: 0,
         quantity: 0,
         cost: 0
       };
     } else {
-      const orderItem = this.data.orderItems.filter((item) => item.id === this.data.OrderID)[0];
       this.formData = {
-        id: this.data.OrderID,
-        name: orderItem.item,
-        price: orderItem.price_per_item,
-        quantity: orderItem.quantity,
-        product: orderItem.product,
-        cost: orderItem.cost
+        product: this.data.orderItem.product,
+        product_name: this.data.orderItem.product_name,
+        price: this.data.orderItem.price_per_item,
+        quantity: this.data.orderItem.quantity,
+        cost: this.data.orderItem.cost
       };
     }
+    this.storageService.getItem('orderItems').subscribe(item => {
+      this.orderItems = JSON.parse(item) as [];
+    });
   }
 
   updatePrice(ctrl) {
@@ -64,39 +68,36 @@ export class OrderItemsComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (this.validateForm(form.value)) {
       if (this.data.orderItemIndex === null) {
+        const product = this.data.products.find(
+          item =>  item.id === parseInt(form.value.id, 10)
+        );
+        form.value.product_name = product.name;
+        form.value.price_per_item = product.price;
         if (
-          this.data.orderItems.some(item => item.product === form.value.product || item.product == form.value.id)
+          this.orderItems !== null && this.orderItems.some(item => item.id === form.value.id)
         ) {
           this.notifierService.showNotification(
             'Item Has already been added. Consider Updating', 'OK', 'error');
         } else {
-          this.orderService.saveOrderItem(form.value).subscribe(
-            response => {
-              if (!response) {
-                this.notifierService.showNotification(
-                  this.orderService.error, 'OK', 'error'
-                );
-              } else {
-                this.orderItem = response as OrderItem;
-              }
-          });
+          this.orderItems.push(form.value);
         }
       } else {
-        this.orderService.updateOrderItem(form.value, this.data.OrderID).subscribe(res => {
-          // this.data.grandTotal -= this.orderItem.cost;
-          console.log('prev', this.orderItem);
-          this.orderItem = res as OrderItem;
-          console.log(this.orderItem);
-          this.notifierService.showNotification('Item updated', 'OK', 'success');
-        });
+        const foundIndex = this.orderItems.findIndex(
+          item => item.id === form.value.product_id
+        );
+        this.orderItems[foundIndex + 1] = form.value;
       }
+      const totalCost = this.data.updateGrandTotal(this.orderItems);
+      this.storageService.setItem('totalCost', JSON.stringify(totalCost));
+      this.storageService.setItem('orderItems', JSON.stringify(this.orderItems));
       this.dialogRef.close();
     }
   }
 
+
   validateForm(formData: OrderItem) {
     this.isValid = true;
-    if (formData.id === 0) {
+    if (formData.product === 0) {
       this.isValid = false;
     }
     else if (formData.quantity === 0) {

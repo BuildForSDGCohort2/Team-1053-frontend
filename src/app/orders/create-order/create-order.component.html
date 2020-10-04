@@ -68,7 +68,7 @@
                 <table mat-table [dataSource]="orderItems" class="mat-elevation-z8 order-items">
                     <ng-container matColumnDef="product">
                       <th mat-header-cell *matHeaderCellDef> Product </th>
-                      <td mat-cell *matCellDef="let orderItem"> {{orderItem.item}} </td>
+                      <td mat-cell *matCellDef="let orderItem"> {{orderItem.product_name}} </td>
                       <td mat-footer-cell *matFooterCellDef>
                            Total Order Cost 
                       </td>
@@ -89,16 +89,16 @@
                     <ng-container matColumnDef="cost">
                         <th mat-header-cell *matHeaderCellDef> Cost </th>
                         <td mat-cell *matCellDef="let orderItem"> {{orderItem.cost | currency }} </td>
-                        <td mat-footer-cell *matFooterCellDef> {{updateGrandTotal(null, null) | currency}} </td>
+                        <td mat-footer-cell *matFooterCellDef> {{ grandTotal | currency}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="addItem">
                         <th mat-header-cell *matHeaderCellDef>
-                            <a mat-raised-button (click)="AddOrEditOrderItem(null, null, 1)" color="primary">Add Item</a>
+                            <a mat-raised-button (click)="AddOrEditOrderItem(null, null)" color="primary">Add Item</a>
                         </th>
                         <td mat-cell *matCellDef="let orderItem">
-                            <a class="edit-delete" (click)="AddOrEditOrderItem(1,orderItem.cost,orderItem.id)"><mat-icon color="primary">edit</mat-icon></a>
-                            <a class="edit-delete ml-2" (click)="onDeleteOrderItem(orderItem.id, orderItem.cost)"><mat-icon color="warn">delete_forever</mat-icon></a>
+                            <a class="edit-delete" (click)="AddOrEditOrderItem(1,orderItem)"><mat-icon color="primary">edit</mat-icon></a>
+                            <a class="edit-delete ml-2" (click)="onDeleteOrderItem(orderItem.id)"><mat-icon color="warn">delete_forever</mat-icon></a>
                         </td>
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>

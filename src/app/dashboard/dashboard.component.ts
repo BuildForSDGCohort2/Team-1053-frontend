@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { OrderService } from '../services/order.service';
+import { OrderService } from '../services/order/order.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

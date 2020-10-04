@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { OrderedItem, OrderInterface } from 'src/app/models/app.model';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order/order.service';
 import { OrderItemsDataSource } from './order-items-datasource';
 
 

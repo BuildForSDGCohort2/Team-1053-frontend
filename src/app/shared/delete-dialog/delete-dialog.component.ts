@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/user/app.service';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { OrderService } from 'src/app/services/order.service';
-import { ProductService } from 'src/app/services/product.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { ProductService } from 'src/app/services/inventory/product.service';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -41,7 +41,6 @@ export class DeleteDialogComponent implements OnInit {
         this.notifier.showNotification('Customer deleted', 'OK', 'success');
       });
     }
-    
   }
 
   ngOnInit(): void {

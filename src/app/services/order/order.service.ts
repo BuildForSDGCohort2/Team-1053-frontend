@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { baseUrl } from 'src/environments/environment';
-import { OrderInterface, OrderItem } from '../models/app.model';
+import { OrderItem } from '../../models/app.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,6 @@ import { OrderInterface, OrderItem } from '../models/app.model';
 export class OrderService {
   error: any;
   orderItems: OrderItem[];
-  orderItemsIDs = parseInt(localStorage.getItem('orderItemsIDs'), 10);
-  grandTotal = localStorage.getItem('grandTotal') === null ? 0 : parseInt(localStorage.getItem('grandTotal'), 10);
-  totalCost = 0;
   token: string = localStorage.getItem('token');
   options = {
     headers: new HttpHeaders({
@@ -26,7 +23,6 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   saveOrder(data: any) {
-    localStorage.setItem('grandTotal', '0');
     return this.http.post(`${baseUrl}orders/`, data, this.options);
   }
 
@@ -69,8 +65,6 @@ export class OrderService {
     return this.http.post(`${baseUrl}order-items/`, payload, this.options)
       .pipe(
         tap(response => {
-          this.grandTotal += data.cost;
-          localStorage.setItem('grandTotal', this.grandTotal.toString());
           return response as OrderItem;
         })
     )
@@ -103,18 +97,6 @@ export class OrderService {
     return this.http.get(`${baseUrl}order-history/${data.trackingId}`, this.options);
   }
 
-  updateOderCost(upDate): Observable<number> {
-    if (upDate === null) {
-      return of(this.grandTotal);
-    }else{
-      let newValue = this.grandTotal + upDate;
-      if (newValue < 0) {
-        newValue = 0;
-      }
-      localStorage.setItem('grandTotal', newValue.toString());
-      return of(this.grandTotal);
-    }
-  }
   orderSummary() {
     return this.http.get(`${baseUrl}order-summary`, this.options);
   }

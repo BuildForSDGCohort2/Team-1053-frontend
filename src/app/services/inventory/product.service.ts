@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
-import { ProductInterface } from '../models/app.model';
+import { ProductInterface } from '../../models/app.model';
 
 @Injectable({
   providedIn: 'root'

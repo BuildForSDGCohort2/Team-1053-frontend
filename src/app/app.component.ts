@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, HostBinding, Inject, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { auth } from 'firebase';
-import { AppService } from './services/app.service';
+import { AppService } from './services/user/app.service';
 
 @Component({
   selector: 'app-root',

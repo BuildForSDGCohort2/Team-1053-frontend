@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Customer } from 'src/app/models/app.model';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/user/app.service';
 
 export class UsersListDataSource extends DataSource<Customer> {
   data: Customer[];

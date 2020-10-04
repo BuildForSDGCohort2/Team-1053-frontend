@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Customer } from 'src/app/models/app.model';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order/order.service';
 import { HistoryElement, OrderHistoryDataSource } from './order-history-datasource';
 
 

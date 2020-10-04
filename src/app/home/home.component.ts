@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../services/app.service';
+import { AppService } from '../services/user/app.service';
 import { StockInterface } from '../models/app.model';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../services/inventory/product.service';
 import { MatDialog } from '@angular/material/dialog';
 
 

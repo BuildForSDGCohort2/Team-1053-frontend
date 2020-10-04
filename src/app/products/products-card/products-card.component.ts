@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductInterface } from 'src/app/models/app.model';
-import { AppService } from 'src/app/services/app.service';
-import { ProductService } from 'src/app/services/product.service';
+import { AppService } from 'src/app/services/user/app.service';
+import { ProductService } from 'src/app/services/inventory/product.service';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({

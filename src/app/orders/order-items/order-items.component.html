@@ -8,8 +8,8 @@
         <label>Product</label>
         <select name="id" #id="ngModel" [(ngModel)]="formData.id" class="form-control" (change)="updatePrice($event.target)"
         [class.is-invalid]="!isValid && formData.id==0">
-          <option value="0">-Select-</option>
-          <option *ngFor="let item of data.products" value="{{item.id}}">{{item.name}}</option>
+          <option [value]="null" disabled>-Select Product-</option>
+          <option *ngFor="let item of data.products" value="{{item.id}}" [selected]="item.name">{{item.name}}</option>
         </select>
       </div>
       <div class="form-row">

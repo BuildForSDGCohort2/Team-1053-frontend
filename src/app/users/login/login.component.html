@@ -10,6 +10,9 @@
             <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
               Email address is <strong>required</strong>
             </mat-error>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('email')">
+              Email address is <strong>not valid</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>

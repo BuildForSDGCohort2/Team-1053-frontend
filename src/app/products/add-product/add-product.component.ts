@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/inventory/product.service';
 
 @Component({
   selector: 'app-add-product',
