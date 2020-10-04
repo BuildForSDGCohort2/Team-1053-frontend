@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Customer, User } from 'src/app/models/app.model';
 import { baseUrl } from 'src/environments/environment';
+import { LocalStorageService } from '../storage/local-storage.service';
+
 
 
 @Injectable({
@@ -11,9 +13,9 @@ import { baseUrl } from 'src/environments/environment';
 })
 
 export class AppService {
-  currentUser: User = JSON.parse(localStorage.getItem('user'));
   public currentCustomer: Customer = JSON.parse(localStorage.getItem('customer'));
   error: string;
+  currentUser;
   successMessage: string;
   token: string = localStorage.getItem('token');
   options = {
@@ -22,25 +24,30 @@ export class AppService {
       Authorization: `Token ${this.token}`
     })
   };
+  res: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storage: LocalStorageService) { }
 
   checkAuthenticationStatus() {
-    const user = localStorage.getItem('user');
-    this.currentUser = JSON.parse(user);
-    return;
+    this.storage.getItem('currentUser').subscribe(user =>
+      this.currentUser = JSON.parse(user));
+    return this.currentUser !== null;
   }
 
   isAuthenticated() {
+    this.storage.getItem('currentUser').subscribe(user =>
+      this.currentUser = JSON.parse(user));
     return !!this.currentUser;
   }
   register(data: object) {
     return this.http.post(`${baseUrl}user/registration`, data)
     .pipe(
       tap(response => {
-        this.currentUser = response['user'] as User;
-        localStorage.setItem('token', JSON.stringify(response['key']));
-        localStorage.setItem('token', JSON.stringify(this.currentUser));
+        this.res = response;
+        this.storage.setItem(
+          'currentUser', JSON.stringify(this.res.user)
+        );
+        localStorage.setItem('token', JSON.stringify(this.res.key));
       })
     )
     .pipe(catchError(err => {
@@ -59,9 +66,11 @@ export class AppService {
     return this.http.post(`${baseUrl}user/login/`, data)
     .pipe(
       tap(response => {
-        this.currentUser = response['user'] as User;
-        localStorage.setItem('token', response['key']);
-        localStorage.setItem('user', JSON.stringify(this.currentUser));
+        this.res = response as User;
+        this.storage.setItem(
+          'currentUser', JSON.stringify(this.res.user)
+        );
+        localStorage.setItem('token', this.res.key);
       })
     )
     .pipe(catchError(err => {

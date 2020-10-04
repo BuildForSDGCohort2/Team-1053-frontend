@@ -71,8 +71,7 @@ export interface OrderInterface {
     date_created: string;
     orderitem_set: OrderedItem[];
     payment_option: string;
-    first_name: string;
-    last_name: string;
+    customer_name: string;
     is_paid: boolean;
 }
 

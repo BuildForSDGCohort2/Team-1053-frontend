@@ -14,13 +14,15 @@ import { AppService } from 'src/app/services/user/app.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  public user: User = this.appService.currentUser;
+  public user: User;
   public customer: Customer;
   multiple = false;
   displayPasswordField = false;
   accept: string;
   readonly maxSize = 16;
   contactForm: FormGroup;
+  infoForm: FormGroup;
+  hide = true;
 
   // Password form
   passwordForm = this.fb.group({
@@ -43,13 +45,7 @@ export class UserProfileComponent implements OnInit {
     old_password: ['', Validators.required],
   });
 
-  // Basic information form
-  infoForm = this.fb.group({
-    username: [this.user.username, Validators.required],
-    email: [this.user.email, Validators.required],
-    first_name: [this.user.first_name, Validators.required],
-    last_name: [this.user.last_name, Validators.required],
-  });
+
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +55,16 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit() {
+    this.storageService.getItem('currentUser').subscribe(
+      user => this.user = JSON.parse(user)
+    );
+    // Basic information form
+    this.infoForm = this.fb.group({
+      username: [this.user.username, Validators.required],
+      email: [this.user.email, Validators.required],
+      first_name: [this.user.first_name, Validators.required],
+      last_name: [this.user.last_name, Validators.required],
+    });
     // Contact form
     this.contactForm = this.fb.group({
       user: this.user.id,
@@ -98,6 +104,7 @@ export class UserProfileComponent implements OnInit {
     this.storageService.getItem('currentCustomer').subscribe(
       customer => this.customer = JSON.parse(customer)
     );
+
   }
   // update basic info
   updateBasicInfo() {

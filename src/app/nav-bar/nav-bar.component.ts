@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { LocalStorageService } from '../services/storage/local-storage.service';
 import { AppService } from '../services/user/app.service';
-import { Router } from '@angular/router';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-nav-bar',
@@ -25,11 +26,13 @@ export class NavBarComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public auth: AppService,
-    private router: Router
+    private router: Router,
+    private storage: LocalStorageService
   ) { }
 
   logout() {
     this.auth.logout().subscribe(() => {
+      this.storage.clear();
       this.router.navigate(['/login']);
     }
     );
@@ -40,7 +43,6 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit() {
     this.auth.checkAuthenticationStatus();
-    this.auth.getCustomerProfile().subscribe();
   }
 
 }

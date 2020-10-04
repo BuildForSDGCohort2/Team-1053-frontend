@@ -62,7 +62,7 @@
               </mat-form-field>
             </div>
             <div class="col" *ngIf="displayPasswordField">
-              <button mat-raised-button color="primary"
+              <button mat-raised-button color="primary" [disabled]="!passwordForm.valid"
               (click)="changePassword()">Submit</button>
               <button mat-raised-button color="primary"
               [style]="{'margin-left': '1rem'}"
@@ -116,7 +116,7 @@
                 </div>
               </div>
               <mat-card-actions>
-                <button mat-raised-button color="primary" type="submit">Update Basic Info</button>
+                <button mat-raised-button color="primary" [disabled]="!infoForm.valid" type="submit">Update Basic Info</button>
               </mat-card-actions>
           </form>
         </div>
@@ -189,7 +189,7 @@
               </div>
             </div>
             <mat-card-actions>
-              <button mat-raised-button color="primary" type="submit">Update Contact Info</button>
+              <button mat-raised-button color="primary" [disabled]="!contactForm.valid" type="submit" >Update Contact Info</button>
             </mat-card-actions>
           </form>
         </div>

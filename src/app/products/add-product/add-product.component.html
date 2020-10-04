@@ -72,6 +72,6 @@
 </div>
 <div mat-dialog-actions align="end">
   <a mat-button mat-dialog-close>Cancel</a>
-  <button mat-button type="submit" color="primary" cdkFocusInitial mat-dialog-close>Submit</button>
+  <button mat-button type="submit" color="primary" [disabled]="!productForm.valid" cdkFocusInitial mat-dialog-close>Submit</button>
 </div>
 </form>

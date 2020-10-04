@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     ])],
     password: [null, Validators.required],
   });
+  hide = true;
 
   constructor(
     private fb: FormBuilder,

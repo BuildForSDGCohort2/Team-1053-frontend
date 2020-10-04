@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'src/app/services/notifications/notifier.service';
+import { LocalStorageService } from 'src/app/services/storage/local-storage.service';
 import { AppService } from 'src/app/services/user/app.service';
 
 @Component({
@@ -37,14 +38,15 @@ export class SignUpComponent {
       ]),
     ]
   });
-
+  hide = true;
   error: any;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AppService,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private storage: LocalStorageService
   ) { }
 
   signUp() {

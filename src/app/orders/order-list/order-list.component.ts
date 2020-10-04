@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { OrderListDataSource } from './order-list-datasource';
-import { OrderService } from 'src/app/services/order/order.service';
 import { OrderInterface } from 'src/app/models/app.model';
-import { ViewOrderComponent } from '../view-order/view-order.component';
+import { OrderService } from 'src/app/services/order/order.service';
 import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
+import { ViewOrderComponent } from '../view-order/view-order.component';
+import { OrderListDataSource } from './order-list-datasource';
 
 @Component({
   selector: 'app-order-list',
@@ -41,7 +41,7 @@ export class OrderListComponent implements AfterViewInit, OnInit {
       width: '40rem',
       data: order,
       position: {
-        top: '10rem'
+        top: '5rem'
       }
     });
     dialogRef.afterClosed().subscribe(() => {
