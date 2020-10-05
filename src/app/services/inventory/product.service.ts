@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { baseUrl } from 'src/environments/environment';
 import { ProductInterface } from '../../models/app.model';
+import { AppService } from '../user/app.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  token: string = localStorage.getItem('token');
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
-      'Authorization': `Token ${this.token}`
+      'Authorization': `Token ${this.authService.token}`
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AppService) { }
 
   getProducts() {
     // get all products from the server
@@ -25,7 +25,7 @@ export class ProductService {
   addProduct(data: ProductInterface) {
     const options = {
       headers: new HttpHeaders({
-        Authorization: `Token ${this.token}`
+        Authorization: `Token ${this.authService.token}`
       })
     };
     // add product to the server

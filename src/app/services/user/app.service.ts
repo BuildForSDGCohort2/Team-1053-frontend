@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Customer, User } from 'src/app/models/app.model';
 import { baseUrl } from 'src/environments/environment';
 import { LocalStorageService } from '../storage/local-storage.service';
 
@@ -13,41 +12,43 @@ import { LocalStorageService } from '../storage/local-storage.service';
 })
 
 export class AppService {
-  public currentCustomer: Customer = JSON.parse(localStorage.getItem('customer'));
+  public currentCustomer;
   error: string;
-  currentUser;
+  public currentUser;
   successMessage: string;
-  token: string = localStorage.getItem('token');
-  options = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Token ${this.token}`
-    })
-  };
-  res: any;
+  public token: string;
+  options;
 
-  constructor(private http: HttpClient, private storage: LocalStorageService) { }
-
-  checkAuthenticationStatus() {
+  constructor(private http: HttpClient, private storage: LocalStorageService) {
     this.storage.getItem('currentUser').subscribe(user =>
       this.currentUser = JSON.parse(user));
+    this.storage.getItem('token').subscribe(token =>
+      this.token = JSON.parse(token));
+    this.options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Token ${this.token}`
+      })
+    };
+   }
+
+  checkAuthenticationStatus() {
+    this.storage.getItem('customer').subscribe(customer =>
+      this.currentCustomer = JSON.parse(customer));
     return this.currentUser !== null;
   }
 
   isAuthenticated() {
-    this.storage.getItem('currentUser').subscribe(user =>
-      this.currentUser = JSON.parse(user));
     return !!this.currentUser;
   }
   register(data: object) {
     return this.http.post(`${baseUrl}user/registration`, data)
     .pipe(
       tap(response => {
-        this.res = response;
         this.storage.setItem(
-          'currentUser', JSON.stringify(this.res.user)
+          'currentUser', JSON.stringify(response['user'])
         );
-        localStorage.setItem('token', JSON.stringify(this.res.key));
+        localStorage.setItem('token', JSON.stringify(response['key']));
       })
     )
     .pipe(catchError(err => {
@@ -66,11 +67,10 @@ export class AppService {
     return this.http.post(`${baseUrl}user/login/`, data)
     .pipe(
       tap(response => {
-        this.res = response as User;
         this.storage.setItem(
-          'currentUser', JSON.stringify(this.res.user)
+          'currentUser', JSON.stringify(response['user'])
         );
-        localStorage.setItem('token', this.res.key);
+        localStorage.setItem('token', JSON.stringify(response['key']));
       })
     )
     .pipe(catchError(err => {
@@ -131,11 +131,12 @@ export class AppService {
       )
         .pipe(tap(data => {
           if (data instanceof Object) {
-            localStorage.setItem('customer', JSON.stringify(data));
+            this.storage.setItem('customer', JSON.stringify(data));
           }
         }))
         .pipe(catchError(err => {
-          this.error = err.error;
+          console.log(err)
+          this.storage.setItem('customer', JSON.stringify(null));
           return of(false);
         }));
     }

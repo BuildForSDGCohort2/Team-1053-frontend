@@ -5,7 +5,7 @@
     <!-- name -->
     <div class="col">
       <mat-form-field class="full-width">
-        <input matInput placeholder="Product Name" formControlName="name">
+        <input matInput placeholder="Product Name" formControlName="name" required>
         <mat-error *ngIf="productForm.controls['name'].hasError('required')">
           Product name is <strong>required</strong>
         </mat-error>
@@ -14,7 +14,7 @@
     <!-- price -->
     <div class="col">
       <mat-form-field class="full-width">
-        <input matInput type="number" placeholder="Product Price" formControlName="price">
+        <input matInput type="number" placeholder="Product Price" formControlName="price" required>
         <mat-error *ngIf="productForm.controls['price'].hasError('required')">
           Product price is <strong>required</strong>
         </mat-error>
@@ -28,7 +28,7 @@
         <mat-label>Stock</mat-label>
         <mat-select formControlName="stock">
           <mat-option value="0">Select</mat-option>
-          <mat-option *ngFor="let item of stock" value="{{item.id}}">{{item.category}}</mat-option>
+          <mat-option *ngFor="let item of stock" value="{{item.id}}" required>{{item.category}}</mat-option>
         </mat-select>
         <mat-error *ngIf="productForm.controls['stock'].hasError('required')">
           Product stock is <strong>required</strong>
@@ -38,7 +38,7 @@
     <!-- image -->
     <div class="col">
       <mat-form-field class="full-width">
-        <ngx-mat-file-input accept="image/png, image/jpeg" formControlName="image" placeholder="Product image">
+        <ngx-mat-file-input accept="image/png, image/jpeg" formControlName="image" placeholder="Product image" required>
           <mat-icon ngxMatFileInputIcon>file_upload</mat-icon>
           <mat-error *ngIf="productForm.controls['image'].hasError">
             Product image is <strong>required</strong>
@@ -52,7 +52,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        <textarea matInput placeholder="Description" formControlName="description" required></textarea>
         <mat-error *ngIf="productForm.controls['description'].hasError('required')">
           Product description is <strong>required</strong>
         </mat-error>
@@ -62,16 +62,16 @@
   <!-- tags -->
   <div class="row">
     <div class="col">
-      <mat-selection-list formControlName="tags">
+      <mat-selection-list>
         <h3 mat-subheader>Tags</h3>
-          <mat-list-option checkboxPosition="before"
-          *ngFor="let tag of tags" value="{{tag.id}}">{{tag.name}}</mat-list-option>
+          <mat-list-option formControlName="tags" checkboxPosition="before"
+          *ngFor="let tag of tags" value="{{tag.id}}" required>{{tag.name}}</mat-list-option>
       </mat-selection-list>
     </div>
   </div>
 </div>
 <div mat-dialog-actions align="end">
   <a mat-button mat-dialog-close>Cancel</a>
-  <button mat-button type="submit" color="primary" [disabled]="!productForm.valid" cdkFocusInitial mat-dialog-close>Submit</button>
+  <button mat-button type="submit" color="primary" cdkFocusInitial mat-dialog-close>Submit</button>
 </div>
 </form>

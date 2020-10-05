@@ -56,7 +56,9 @@ export class SignUpComponent {
               this.authService.error[0], 'OK', 'error'
             );
           } else {
-            this.router.navigate(['dashboard']);
+            this.authService.checkAuthenticationStatus();
+            this.authService.getCustomerProfile().subscribe();
+            this.router.navigate(['profile']);
           }
         });
     }

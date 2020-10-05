@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value)
       .subscribe(response => {
         if (!response) {
+          this.authService.checkAuthenticationStatus();
+          this.authService.getCustomerProfile().subscribe();
           this.notifierService.showNotification(
             this.authService.error[0], 'OK', 'error'
           );

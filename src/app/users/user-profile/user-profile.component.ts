@@ -1,4 +1,3 @@
-import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,16 +29,14 @@ export class UserProfileComponent implements OnInit {
     Validators.compose([
       Validators.required,
       Validators.minLength(6),
-      Validators.maxLength(15),
-      Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/')
+      Validators.maxLength(15)
     ]),
     ],
     new_password2: ['',
     Validators.compose([
       Validators.required,
       Validators.minLength(6),
-      Validators.maxLength(15),
-      Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/')
+      Validators.maxLength(15)
     ]),
     ],
     old_password: ['', Validators.required],
@@ -55,6 +52,10 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit() {
+    this.appService.checkAuthenticationStatus();
+    this.storageService.getItem('customer').subscribe(
+      customer => this.customer = JSON.parse(customer)
+    );
     this.storageService.getItem('currentUser').subscribe(
       user => this.user = JSON.parse(user)
     );
@@ -68,42 +69,29 @@ export class UserProfileComponent implements OnInit {
     // Contact form
     this.contactForm = this.fb.group({
       user: this.user.id,
-      address: [
-        this.customer ? this.customer.address : '',
+      address: [this.customer.address || '',
         Validators.required
       ],
-      phone: [
-        this.customer ? this.customer.mobile : '',
+      phone: [this.customer.mobile || '',
         Validators.required
       ],
-      city: [
-        this.customer ? this.customer.city : '',
+      city: [this.customer.city || '',
         Validators.required
       ],
-      street: [
-        this.customer ? this.customer.street : '',
+      street: [this.customer.street || '',
         Validators.required
       ],
       postal_code: [
-        '',
+        this.customer.postal_code || '',
         Validators.compose([
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(5),
         ]),
       ],
-      profile_pic: [null,
-        [Validators.required, MaxSizeValidator(this.maxSize * 1024)]
-      ]
+      profile_pic: [null]
     });
-    this.appService.getCustomerProfile().subscribe(
-      res => this.storageService.setItem(
-        'currentCustomer', JSON.stringify(res)
-      )
-    );
-    this.storageService.getItem('currentCustomer').subscribe(
-      customer => this.customer = JSON.parse(customer)
-    );
+    
 
   }
   // update basic info
@@ -140,7 +128,7 @@ export class UserProfileComponent implements OnInit {
   updateContactInfo() {
     this.appService.updateContactInfo(this.contactForm.value).subscribe(
       (res) => {
-        this.storageService.setItem('currentCustomer', JSON.stringify(res));
+        this.storageService.setItem('customer', JSON.stringify(res));
         this.notifier.showNotification(
           'Contact Information Updated Successfully',
           'OK',
@@ -156,7 +144,7 @@ export class UserProfileComponent implements OnInit {
         );
       }
     );
-    this.storageService.getItem('currentCustomer').subscribe(
+    this.storageService.getItem('customer').subscribe(
       customer => this.customer = JSON.parse(customer)
     );
   }

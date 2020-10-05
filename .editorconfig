@@ -1,10 +1,10 @@
 # Editor configuration, see https://editorconfig.org
-root = true
-
-[*]
-charset = utf-8
-indent_style = space
-indent_size = 2
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Customer } from 'src/app/models/app.model';
+import { baseUrl } from 'src/environments/environment';
+import { LocalStorageService } from '../storage/local-storage.service';
 insert_final_newline = true
 trim_trailing_whitespace = true
 

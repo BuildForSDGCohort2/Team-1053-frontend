@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { baseUrl } from 'src/environments/environment';
 import { OrderItem } from '../../models/app.model';
+import { AppService } from '../user/app.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,15 @@ import { OrderItem } from '../../models/app.model';
 export class OrderService {
   error: any;
   orderItems: OrderItem[];
-  token: string = localStorage.getItem('token');
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       // tslint:disable-next-line: object-literal-key-quotes
-      'Authorization': `Token ${this.token}`
+      'Authorization': `Token ${this.authService.token}`
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AppService) { }
 
   saveOrder(data: any) {
     return this.http.post(`${baseUrl}orders/`, data, this.options);

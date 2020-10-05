@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NotifierService } from 'src/app/services/notifications/notifier.service';
 import { ProductService } from 'src/app/services/inventory/product.service';
+import { NotifierService } from 'src/app/services/notifications/notifier.service';
 
 @Component({
   selector: 'app-add-product',
@@ -17,8 +17,8 @@ export class AddProductComponent implements OnInit {
     price: [null, Validators.required],
     stock: [null, Validators.required],
     code: [null, Validators.required],
-    image: [null, Validators.required],
-    tags: [null, Validators.required],
+    image: [null],
+    tags: [null],
   });
 
   constructor(

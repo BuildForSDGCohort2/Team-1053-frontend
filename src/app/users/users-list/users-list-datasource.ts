@@ -1,8 +1,8 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { merge, Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
 import { Customer } from 'src/app/models/app.model';
 import { AppService } from 'src/app/services/user/app.service';
 
@@ -14,7 +14,10 @@ export class UsersListDataSource extends DataSource<Customer> {
   constructor(private appService: AppService) {
     super();
     this.appService.getCustomers()
-      .subscribe(arg => this.data = arg as Customer[]);
+      .subscribe(customers => {
+        console.log(customers)
+        // this.data = customers;
+      });
   }
 
   connect(): Observable<Customer[]> {

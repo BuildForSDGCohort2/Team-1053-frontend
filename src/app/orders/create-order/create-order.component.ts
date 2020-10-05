@@ -65,6 +65,7 @@ export class CreateOrderComponent implements OnInit {
     this.storageService.getItem('totalCost').subscribe(item => {
       this.grandTotal = JSON.parse(item) as number;
     });
+
     // disable some form fields
     this.fields.forEach(field => this.addressForm.controls[field].disable());
   }
@@ -101,10 +102,10 @@ export class CreateOrderComponent implements OnInit {
         items: this.orderItems,
         payment_option: this.addressForm.value.payment_option
       };
-      console.log(data);
       this.orderService.saveOrder(data).subscribe(
         () => {
           this.notifierService.showNotification('Successfully placed an order', 'OK', 'success');
+          this.storageService.setItem('orderItems', JSON.stringify([]));
           this.storageService.setItem('totalCost', JSON.stringify(0));
           this.router.navigate(['orders']);
         },
