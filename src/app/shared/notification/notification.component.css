@@ -7,8 +7,18 @@
 }
 .background-green {
     background: green;
+    color: white;
+    font-weight: 500;
 }
 
 .background-red {
-    background: red;
+    background: rgb(180, 103, 103);
+    color: white;
+    font-weight: 500;
+}
+
+.background-info{
+    background: rgb(120, 158, 219);
+    color: white;
+    font-weight: 500;
 }

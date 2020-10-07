@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OrderItemsComponent } from './order-items.component';
+
 
 describe('OrderItemsComponent', () => {
   let component: OrderItemsComponent;
@@ -19,7 +19,4 @@ describe('OrderItemsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

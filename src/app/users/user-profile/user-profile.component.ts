@@ -69,20 +69,20 @@ export class UserProfileComponent implements OnInit {
     // Contact form
     this.contactForm = this.fb.group({
       user: this.user.id,
-      address: [this.customer.address || '',
+      address: [this.customer !== null ? this.customer.address : '',
         Validators.required
       ],
-      phone: [this.customer.mobile || '',
+      phone: [this.customer !== null ? this.customer.mobile : '',
         Validators.required
       ],
-      city: [this.customer.city || '',
+      city: [this.customer !== null ? this.customer.city : '',
         Validators.required
       ],
-      street: [this.customer.street || '',
+      street: [this.customer !== null ? this.customer.street : '',
         Validators.required
       ],
       postal_code: [
-        this.customer.postal_code || '',
+        this.customer !== null ? this.customer.postal_code : '',
         Validators.compose([
           Validators.required,
           Validators.minLength(5),
@@ -91,8 +91,6 @@ export class UserProfileComponent implements OnInit {
       ],
       profile_pic: [null]
     });
-    
-
   }
   // update basic info
   updateBasicInfo() {

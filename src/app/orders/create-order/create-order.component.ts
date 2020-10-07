@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Customer, OrderItem, ProductInterface } from 'src/app/models/app.model';
@@ -21,7 +21,7 @@ export class CreateOrderComponent implements OnInit {
   displayedColumns: string[] = ['product', 'price', 'quantity', 'cost', 'addItem'];
   itemsID: number[];
   productList: ProductInterface[];
-  user: Customer = this.appService.currentCustomer;
+  user: Customer;
   product: ProductInterface;
   grandTotal;
   fields = ['first_name', 'last_name', 'address', 'mobile', 'city', 'street', 'postalCode'];
@@ -30,17 +30,8 @@ export class CreateOrderComponent implements OnInit {
     'Paypal',
     'Credit Card'
   ];
+  addressForm: FormGroup;
 
-  addressForm = this.fb.group({
-    first_name: [this.user.user.first_name],
-    last_name: [this.user.user.last_name],
-    address: [this.user.address],
-    mobile: [this.user.mobile],
-    city: [this.user.city],
-    street: [this.user.street],
-    postalCode: [this.user.postal_code],
-    payment_option: ['', Validators.required],
-  });
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -65,6 +56,27 @@ export class CreateOrderComponent implements OnInit {
     this.storageService.getItem('totalCost').subscribe(item => {
       this.grandTotal = JSON.parse(item) as number;
     });
+    this.storageService.getItem('customer').subscribe(item => {
+      this.user = JSON.parse(item) as Customer;
+    });
+    if (this.user === null){
+      this.notifierService.showNotification(
+        'Update your profile before you proceed',
+        'OK', 'info'
+      );
+      this.router.navigate(['profile']);
+    }
+    this.addressForm = this.fb.group({
+      first_name: [this.user.user.first_name],
+      last_name: [this.user.user.last_name],
+      address: [this.user.address],
+      mobile: [this.user.mobile],
+      city: [this.user.city],
+      street: [this.user.street],
+      postalCode: [this.user.postal_code],
+      payment_option: ['', Validators.required],
+    });
+
 
     // disable some form fields
     this.fields.forEach(field => this.addressForm.controls[field].disable());

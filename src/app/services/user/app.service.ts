@@ -38,6 +38,10 @@ export class AppService {
     return this.currentUser !== null;
   }
 
+  isCustomerCreated() {
+    return !!this.currentCustomer;
+  }
+
   isAuthenticated() {
     return !!this.currentUser;
   }

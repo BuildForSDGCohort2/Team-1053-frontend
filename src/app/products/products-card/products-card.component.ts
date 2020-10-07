@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductInterface } from 'src/app/models/app.model';
-import { AppService } from 'src/app/services/user/app.service';
 import { ProductService } from 'src/app/services/inventory/product.service';
+import { AppService } from 'src/app/services/user/app.service';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
@@ -29,7 +29,6 @@ export class ProductsCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.stock)
     this.breakpoint = (window.innerWidth <= 800) ? 1 : 4;
     this.productService.getProducts().subscribe(data => {
       this.productsList = data as ProductInterface[];

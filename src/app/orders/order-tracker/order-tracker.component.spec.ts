@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OrderTrackerComponent } from './order-tracker.component';
+
 
 describe('OrderTrackerComponent', () => {
   let component: OrderTrackerComponent;
@@ -19,7 +19,4 @@ describe('OrderTrackerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

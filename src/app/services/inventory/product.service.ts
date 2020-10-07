@@ -38,12 +38,12 @@ export class ProductService {
   }
   getStock() {
     // get all stock from the server
-    return this.http.get(`${baseUrl}stock/`, this.options);
+    return this.http.get(`${baseUrl}stock/`);
   }
 
   getTags() {
     // get all tags from the server
-    return this.http.get(`${baseUrl}tags/`, this.options);
+    return this.http.get(`${baseUrl}tags/`);
   }
 
   getFormData = object => Object.keys(object).reduce((formData, key) => {
